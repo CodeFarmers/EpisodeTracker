@@ -7,6 +7,7 @@ gem 'rails', '3.2.3'
 
 gem 'sqlite3'
 gem 'jquery-rails'
+gem 'bootstrap-sass'
 
 group :development, :test do
   gem 'rspec-rails'
