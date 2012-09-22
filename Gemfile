@@ -8,6 +8,8 @@ gem 'rails', '3.2.3'
 gem 'sqlite3'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
+gem 'therubyracer'
+gem 'devise'
 
 group :development, :test do
   gem 'rspec-rails'
