@@ -3,7 +3,7 @@
     <div class="container">
       <nav>
         <ul class="nav pull-right">
-          <li><%= link_to "Home",    '#' %></li>
+          <li><%= link_to "Home", '/pages/home' %></li>
           <li><%= link_to "Sign up", new_user_registration_path %></li>
           <% if !user_signed_in? %>
             <li><%= link_to "Sign in", new_user_session_path %></li>
