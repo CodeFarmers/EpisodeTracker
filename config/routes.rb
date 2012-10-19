@@ -1,5 +1,7 @@
 EpisodeTracker::Application.routes.draw do
 
+  get "series/create"
+
   devise_for :users
   get "pages/home"
 
