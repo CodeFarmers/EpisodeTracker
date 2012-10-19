@@ -1,5 +1,7 @@
 <% if user_signed_in? %>
-    <div class="hero-unit">This is the home page when signed in</div>
+    <div class="hero-unit">
+      Welcome, <%= current_user.email %>
+    </div>
 <% else %>
-    <div class="hero-unit">This is the home page when not signed in</div>
+    <div class="hero-unit">How about signing up?</div>
 <% end %>
