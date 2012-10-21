@@ -7,11 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <div class="container">
     <%= render 'layouts/header' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-<%= yield %>
-
+    </div>
+    <div class="hero-unit">
+      <% unless flash[:alert].blank? && flash[:notice].blank? %>
+        <p class="notice"><%= notice%></p>
+        <p class="alert"><%= alert%></p>
+      <% end %>
+        <%= yield %>
+    </div>
 </body>
 </html>
