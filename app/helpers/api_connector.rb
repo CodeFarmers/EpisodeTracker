@@ -1,5 +1,7 @@
 class ApiConnector
   require 'net/http'
+  require "rexml/document"
+  include REXML
 
   def initialize
     mirror_path = "http://thetvdb.com"
@@ -7,13 +9,19 @@ class ApiConnector
     api_url = mirror_path + "/api/" + api_key
     url = URI.parse("#{mirror_path}/api/Updates.php?type=none")
     res = Net::HTTP.get_response(url)
-    ap res.body
-    get_time_from_response(res)
+    time_from_response = get_time_from_response(res)
+    set_previous_time(time_from_response)
 
   end
 
-  def get_time_from_response(response)
-    ap response.body
+  def set_previous_time(previous_time)
+    @previous_time = previous_time
+  end
+
+  def get_time_from_response(res)
+    parsed_body = Document.new res.body
+    time = XPath.match( parsed_body, "//Time" )
+    time[0].text
   end
 
   def getSeries
