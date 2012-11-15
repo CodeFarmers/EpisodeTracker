@@ -4,28 +4,37 @@ class ApiConnector
   include REXML
 
   def initialize
-    mirror_path = "http://thetvdb.com"
-    api_key = "4F5EC797A9F93512"
-    api_url = mirror_path + "/api/" + api_key
-    url = URI.parse("#{mirror_path}/api/Updates.php?type=none")
+    @mirror_path = "http://thetvdb.com/api"
+    api_key = "/4F5EC797A9F93512"
+    @api_url = @mirror_path + api_key
+  end
+
+  def set_previous_time()
+    xml = get_response_body_for("#{@mirror_path}/Updates.php?type=none")
+    time = attribute_from_xml("Time", xml)
+    @previous_time = time[0].text
+  end
+
+  def get_series(name)
+    url = @mirror_path + "/GetSeries.php?seriesname=#{name}"
+    xml = get_response_body_for(url)
+    puts attribute_from_xml("seriesid", xml)
+
+  end
+
+  def get_response_body_for(url)
+    url = URI.parse(url)
     res = Net::HTTP.get_response(url)
-    time_from_response = get_time_from_response(res)
-    set_previous_time(time_from_response)
-
+    res.body
   end
 
-  def set_previous_time(previous_time)
-    @previous_time = previous_time
+  def download_series_zip(url)
+    url = URI.parse(url)
+    Net::HTTP.get_response(url)
   end
 
-  def get_time_from_response(res)
-    parsed_body = Document.new res.body
-    time = XPath.match( parsed_body, "//Time" )
-    time[0].text
+  def attribute_from_xml(attr, xml)
+    parsed_xml = Document.new xml
+    XPath.match( parsed_xml, "//#{attr}")
   end
-
-  def getSeries
-    #self.get_response_from_url("/GetSeries.php?seriesname=")
-  end
-
 end

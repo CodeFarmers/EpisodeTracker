@@ -1,0 +1,9 @@
+<div class="hero-unit">
+  <h2>Look for a series</h2>
+
+  <%= form_for(@series, :url => { :action => "find_or_create" }) do |f| %>
+    <div><%= f.label :name %><br />
+      <%= f.text_field :name%></div>
+    <div><%= f.submit "Search", :class => "btn" %></div>
+  <% end %>
+</div>

@@ -15,6 +15,8 @@ ActiveRecord::Schema.define(:version => 20121019220429) do
 
   create_table "series", :force => true do |t|
     t.string   "name"
+    t.text     "overview"
+    t.string   "remote_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
