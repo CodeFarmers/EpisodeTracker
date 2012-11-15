@@ -15,11 +15,13 @@ class ApiConnector
     @previous_time = time[0].text
   end
 
-  def get_series(name)
-    url = @mirror_path + "/GetSeries.php?seriesname=#{name}"
+  def get_series_from_remote(name)
+    url = @mirror_path + "/GetSeries.php?seriesname=#{htmlize(name)}"
     xml = get_response_body_for(url)
-    puts attribute_from_xml("seriesid", xml)
-
+    series_id = elements_from_xml("seriesid", xml).first.try(:text)
+    series_name = elements_from_xml("SeriesName", xml).first.try(:text)
+    series_overview = elements_from_xml("Overview", xml).first.try(:text)
+    Hash[ :series_id => series_id, :series_name => series_name, :series_overview => series_overview ]
   end
 
   def get_response_body_for(url)
@@ -33,8 +35,12 @@ class ApiConnector
     Net::HTTP.get_response(url)
   end
 
-  def attribute_from_xml(attr, xml)
+  def elements_from_xml(attr, xml)
     parsed_xml = Document.new xml
-    XPath.match( parsed_xml, "//#{attr}")
+    parsed_xml.elements.to_a("//#{attr}")
+  end
+
+  def htmlize(string)
+    string.gsub(" ", "%20")
   end
 end
