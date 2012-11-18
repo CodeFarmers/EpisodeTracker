@@ -11,7 +11,7 @@ class ApiConnector
 
   def set_previous_time()
     xml = get_response_body_for("#{@mirror_path}/Updates.php?type=none")
-    time = attribute_from_xml("Time", xml)
+    time = elements_from_xml("Time", xml)
     @previous_time = time[0].text
   end
 
@@ -31,8 +31,8 @@ class ApiConnector
   end
 
   def download_series_zip(url)
-    url = URI.parse(url)
-    Net::HTTP.get_response(url)
+    #url = URI.parse(url)
+    #Net::HTTP.get_response(url)
   end
 
   def elements_from_xml(attr, xml)
