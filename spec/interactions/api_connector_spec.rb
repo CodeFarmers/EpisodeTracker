@@ -39,9 +39,15 @@ describe ApiConnector do
 
     describe 'when the search string is empty' do
 
-      before(:all) { @series = @ac.get_series_from_remote("") }
-
-      xit 'should raise a "NoResultFoundException"'
+      it 'should raise a "NoResultFoundException"' do
+        begin
+        @ac.get_series_from_remote("")
+          ##TODO: make apiconnector raise error
+        rescue e
+          ap e
+          e.should be_instance_of(NoResultFoundException)
+        end
+      end
     end
 
     describe 'when the search string is invalid' do

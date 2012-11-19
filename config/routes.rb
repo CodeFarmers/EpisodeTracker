@@ -2,6 +2,7 @@ EpisodeTracker::Application.routes.draw do
 
   get "series/create"
   get "series/search"
+  get "series/show"
   match "series/find_or_create" => "series#find_or_create"
   devise_for :users
   get "pages/home"

@@ -18,10 +18,14 @@ class ApiConnector
   def get_series_from_remote(name)
     url = @mirror_path + "/GetSeries.php?seriesname=#{htmlize(name)}"
     xml = get_response_body_for(url)
-    series_id = elements_from_xml("seriesid", xml).first.try(:text)
-    series_name = elements_from_xml("SeriesName", xml).first.try(:text)
-    series_overview = elements_from_xml("Overview", xml).first.try(:text)
-    Hash[ :series_id => series_id, :series_name => series_name, :series_overview => series_overview ]
+    if !series_name_unknown?(xml)
+      series_id = elements_from_xml("seriesid", xml).first.text
+      series_name = elements_from_xml("SeriesName", xml).first.text
+      series_overview = elements_from_xml("Overview", xml).first.text
+      Hash[ :series_id => series_id, :series_name => series_name, :series_overview => series_overview ]
+    else
+      unknown_series
+    end
   end
 
   def get_response_body_for(url)
@@ -42,5 +46,13 @@ class ApiConnector
 
   def htmlize(string)
     string.gsub(" ", "%20")
+  end
+
+  def series_name_unknown?(xml)
+    elements_from_xml("seriesid", xml).first.nil?
+  end
+
+  def unknown_series
+    raise ActionController::RoutingError.new('Series not found')
   end
 end
