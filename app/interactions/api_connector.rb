@@ -19,13 +19,21 @@ class ApiConnector
     url = @mirror_path + "/GetSeries.php?seriesname=#{htmlize(name)}"
     xml = get_response_body_for(url)
     if !series_name_unknown?(xml)
-      series_id = elements_from_xml("seriesid", xml).first.text
-      series_name = elements_from_xml("SeriesName", xml).first.text
-      series_overview = elements_from_xml("Overview", xml).first.text
-      Hash[ :series_id => series_id, :series_name => series_name, :series_overview => series_overview ]
+      create_series_hash(xml)
     else
       unknown_series
     end
+  end
+
+  def create_series_hash(xml)
+    series_ids = elements_from_xml("seriesid", xml)
+    series_names = elements_from_xml("SeriesName", xml)
+    series_overviews = elements_from_xml("Overview", xml)
+    series_hash = {}
+    series_ids.length.times do |i|
+      series_hash[i] = { :series_id => series_ids[i].text, :series_name => series_names[i].text, :series_overview =>series_overviews[i].text }
+    end
+    series_hash
   end
 
   def get_response_body_for(url)

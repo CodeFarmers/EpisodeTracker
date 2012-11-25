@@ -12,16 +12,12 @@ class SeriesController < ApplicationController
         ac = ApiConnector.new
         series = ac.get_series_from_remote(params[:name])
         @series = Series.new(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
-        @series.save
-        redirect_to :action => "show"#, :name => @series.name, :overview => @series.overview
+        #@series.save
+        render :show
         #ap @series
         #ap @series.valid?
       end
     end
-
-  end
-
-  def show
 
   end
 
