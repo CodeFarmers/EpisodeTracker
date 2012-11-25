@@ -76,30 +76,10 @@ describe ApiConnector do
 
   describe 'get series from remote' do
 
-    describe 'when the search returns one result' do
-
-      before(:all) do
-        @ac.stub!(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
-        @series_hash = @ac.get_series_from_remote("the simpsons")
-      end
-
-      it 'should return the remote series id' do
-        @series_hash[0][:series_id].should == "71663"
-      end
-
-      it 'should return the remote series name' do
-        @series_hash[0][:series_name].should == "The Simpsons"
-      end
-
-      it 'should return the remote series overview' do
-        @series_hash[0][:series_overview].should include("Originally created by cartoonist Matt Groening")
-      end
-    end
-
     describe 'when the search returns multiple results' do
 
       before(:all) do
-        @ac.stub!(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
+        @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
         @series_hash = @ac.get_series_from_remote("the simpsons")
       end
 
@@ -125,7 +105,7 @@ describe ApiConnector do
     describe 'when the overview is empty' do
 
       before(:all) do
-        @ac.stub!(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
+        @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
         @series_hash = @ac.get_series_from_remote("the simpsons")
       end
 
@@ -134,23 +114,15 @@ describe ApiConnector do
       end
     end
 
-    describe 'when the search string is empty' do
-
-      before(:all) do
-        @ac.stub!(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=").and_return(@empty_xml)
-      end
+    describe 'when the search string is empty or invalid' do
 
       it 'should raise a "RoutingError"' do
+        @ac.stub(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=").and_return(@empty_xml)
         expect { @ac.get_series_from_remote("") }.to raise_error(ActionController::RoutingError)
       end
-    end
-
-    describe 'when the search string is invalid' do
-      before(:all) do
-        @ac.stub!(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=qsdfqsdf").and_return(@empty_xml)
-      end
 
       it 'should raise a "RoutingError"' do
+        @ac.stub(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=qsdfqsdf").and_return(@empty_xml)
         expect { @ac.get_series_from_remote("qsdfqsdf") }.to raise_error(ActionController::RoutingError)
       end
     end
