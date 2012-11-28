@@ -2,9 +2,9 @@ class SeriesController < ApplicationController
   def find_or_create
     if params[:name].blank?
       flash.now[:alert] = "Why don't you try filling in the field?"
-      render "search"
+      render :search
     else
-      @series = Series.find_by_name(params[:name])
+      @series = Series.where('lower(name) = ?', params[:name].downcase).first
       if @series
         render :show
       else
@@ -13,7 +13,11 @@ class SeriesController < ApplicationController
         @remote_series.each do |id, series|
           Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
         end
-        render :select_for_show
+        if @remote_series.length == 1
+          render :show
+        else
+          render :select_for_show
+        end
       end
     end
   end
