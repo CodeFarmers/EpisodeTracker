@@ -14,14 +14,6 @@ describe SeriesController do
       end
     end
 
-    #context 'with an invalid name' do
-    #  @ac = ApiConnector.new
-    #  @ac.stub(:get_series_from_remote)
-    #  post :find_or_create, :name => "qsdfqsdf"
-    #
-    #
-    #end
-
     context 'with a valid name' do
 
       describe 'when no result in found in the local db' do
@@ -33,6 +25,7 @@ describe SeriesController do
         it 'should create the found series locally' do
           Series.count.should eq(2)
         end
+
         its(:response) { should be_success }
       end
 

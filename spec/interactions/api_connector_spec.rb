@@ -114,12 +114,15 @@ describe ApiConnector do
       end
     end
 
-    describe 'when the search string is empty or invalid' do
+    describe 'when the search string is empty' do
 
       it 'should raise a "RoutingError"' do
         @ac.stub(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=").and_return(@empty_xml)
         expect { @ac.get_series_from_remote("") }.to raise_error(ActionController::RoutingError)
       end
+    end
+
+    describe 'when the search string is invalid' do
 
       it 'should raise a "RoutingError"' do
         @ac.stub(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=qsdfqsdf").and_return(@empty_xml)
