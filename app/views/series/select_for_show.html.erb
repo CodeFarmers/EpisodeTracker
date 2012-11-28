@@ -1,0 +1,5 @@
+<div class="hero-unit">
+  <%= @remote_series.each do |key, series| %>
+  <h2>Your search returned the following results <%= series[:series_name]%></h2><br />
+  <% end %>
+</div>

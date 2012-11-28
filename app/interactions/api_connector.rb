@@ -31,7 +31,7 @@ class ApiConnector
     series_overviews = elements_from_xml("Overview", xml)
     series_hash = {}
     series_ids.length.times do |i|
-      series_hash[i] = { :series_id => series_ids[i].text, :series_name => series_names[i].text, :series_overview =>series_overviews[i].text }
+      series_hash.update( { i => {:series_id => series_ids[i].text, :series_name => series_names[i].text, :series_overview =>series_overviews[i].text }} )
     end
     series_hash
   end

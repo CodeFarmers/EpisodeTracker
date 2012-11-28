@@ -6,19 +6,16 @@ class SeriesController < ApplicationController
     else
       @series = Series.find_by_name(params[:name])
       if @series
-        #render series show page
-        #ap "Series found"
+        render :show
       else
         ac = ApiConnector.new
-        series = ac.get_series_from_remote(params[:name])
-        @series = Series.new(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
-        #@series.save
-        render :show
-        #ap @series
-        #ap @series.valid?
+        @remote_series = ac.get_series_from_remote(params[:name])
+        @remote_series.each do |id, series|
+          Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
+        end
+        render :select_for_show
       end
     end
-
   end
 
   def search

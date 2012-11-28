@@ -22,3 +22,6 @@ Gemfile.lock
 
 # Ignore coverage
 coverage
+
+# Ignore public/assets
+public/assets/*
