@@ -1,6 +1,8 @@
 class ApiConnector
   require 'net/http'
   require "rexml/document"
+  require "zip/zip"
+  require 'open-uri'
   include REXML
 
   def initialize
@@ -42,9 +44,22 @@ class ApiConnector
     res.body
   end
 
-  def download_series_zip(url)
-    #url = URI.parse(url)
-    #Net::HTTP.get_response(url)
+  def create_handle_for_zip(series_id)
+    url = @api_url + "/series/#{series_id}/all/en.zip"
+    open(url)
+  end
+
+  def unzip(zip)
+    files = []
+    Zip::ZipFile.open(zip) do |zipfile|
+      zipfile.each do |entry|
+        fpath = File.join("tmp/", entry.to_s)
+        FileUtils.mkdir_p(File.dirname(fpath))
+        zipfile.extract(entry, fpath){ true }
+        files << File.open(fpath)
+      end
+    end
+    files
   end
 
   def elements_from_xml(attr, xml)

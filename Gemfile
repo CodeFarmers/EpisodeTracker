@@ -14,6 +14,7 @@ gem 'devise'
 group :development, :test do
   gem 'rspec-rails'
   gem 'awesome_print'
+  gem 'rubyzip'
 end
 
 group :test do

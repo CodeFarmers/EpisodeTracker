@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "zip/zip"
 
 describe ApiConnector do
 
@@ -128,6 +129,26 @@ describe ApiConnector do
         @ac.stub(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=qsdfqsdf").and_return(@empty_xml)
         expect { @ac.get_series_from_remote("qsdfqsdf") }.to raise_error(ActionController::RoutingError)
       end
+    end
+  end
+
+  describe 'create handle for zip' do
+
+    it 'should be of type tempfile' do
+      series = Series.create(name: "SomeSeries", remote_id: "71663")
+      zip = @ac.create_handle_for_zip(series.remote_id)
+      zip.should be_instance_of(Tempfile)
+    end
+  end
+
+  describe 'unzip zipfile' do
+
+    it 'should return the unzipped files' do
+      series = Series.create(name: "SomeSeries", remote_id: "71663")
+      zip = @ac.create_handle_for_zip(series.remote_id)
+      files = @ac.unzip(zip)
+      files.should be_instance_of(Array)
+      files[0].should be_instance_of(File)
     end
   end
 end
