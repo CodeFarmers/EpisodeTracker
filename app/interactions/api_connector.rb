@@ -47,7 +47,7 @@ class ApiConnector
   def create_handle_for_zip(series_id)
     url = @api_url + "/series/#{series_id}/all/en.zip"
     open(url)
-  end
+ end
 
   def unzip(zip)
     files = []
@@ -62,9 +62,18 @@ class ApiConnector
     files
   end
 
+  def get_episodes(series_id)
+    ziphandle = create_handle_for_zip(series_id)
+    files = unzip(ziphandle)
+    parsed_xml = Document.new files[0]
+    root = parsed_xml.root
+    root.elements.to_a('//Episode')
+  end
+
   def elements_from_xml(attr, xml)
     parsed_xml = Document.new xml
     parsed_xml.elements.to_a("//#{attr}")
+
   end
 
   def htmlize(string)

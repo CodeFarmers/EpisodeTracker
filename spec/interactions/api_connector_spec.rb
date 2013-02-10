@@ -136,19 +136,60 @@ describe ApiConnector do
 
     it 'should be of type tempfile' do
       series = Series.create(name: "SomeSeries", remote_id: "71663")
-      zip = @ac.create_handle_for_zip(series.remote_id)
-      zip.should be_instance_of(Tempfile)
+      tmpfile = Tempfile.new('tempfile', "tmp")
+      @ac.should_receive(:create_handle_for_zip).with(series.remote_id).and_return(tmpfile)
+      ziphandle = @ac.create_handle_for_zip(series.remote_id)
+      ziphandle.should be_instance_of(Tempfile)
     end
   end
 
   describe 'unzip zipfile' do
 
+    before(:all) do
+      ziphandle = File.open("spec/data/en.zip")
+      @files = @ac.unzip(ziphandle)
+    end
+
+    it 'should not be nil' do
+      @files.should_not be_nil
+    end
+
+    it 'should have a lenght of 3' do
+      @files.length.should eq 3
+    end
+
+    it 'should be an instance of Array' do
+      @files.should be_instance_of(Array)
+    end
+
     it 'should return the unzipped files' do
+      @files[0].should be_instance_of(File)
+    end
+  end
+
+  describe 'get episodes for series' do
+
+    before(:all) do
       series = Series.create(name: "SomeSeries", remote_id: "71663")
-      zip = @ac.create_handle_for_zip(series.remote_id)
-      files = @ac.unzip(zip)
-      files.should be_instance_of(Array)
-      files[0].should be_instance_of(File)
+      ziphandle = File.open("spec/data/en.zip")
+      @ac.should_receive(:create_handle_for_zip).with(series.remote_id).and_return(ziphandle)
+      @episodes = @ac.get_episodes(series.remote_id)
+    end
+
+    it 'should have the correct name' do
+      @episodes.second.elements["EpisodeName"].text.should == "Original Pilot"
+    end
+
+    it 'should have the correct overview' do
+      @episodes.second.elements["Overview"].text.should include("Steve becomes the school president")
+    end
+
+    it 'should have the correct remote id' do
+      @episodes.second.elements["id"].text.should == "4321587"
+    end
+
+    it 'should be an array of episodes' do
+      @episodes.class.should == Array
     end
   end
 end
