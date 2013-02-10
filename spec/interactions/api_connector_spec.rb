@@ -134,12 +134,18 @@ describe ApiConnector do
 
   describe 'create handle for zip' do
 
+    before(:all) { @series = Series.create(name: "SomeSeries", remote_id: "71663") }
+
     it 'should be of type tempfile' do
-      series = Series.create(name: "SomeSeries", remote_id: "71663")
       tmpfile = Tempfile.new('tempfile', "tmp")
-      @ac.should_receive(:create_handle_for_zip).with(series.remote_id).and_return(tmpfile)
-      ziphandle = @ac.create_handle_for_zip(series.remote_id)
+      @ac.should_receive(:create_handle_for_zip).with(@series.remote_id).and_return(tmpfile)
+      ziphandle = @ac.create_handle_for_zip(@series.remote_id)
       ziphandle.should be_instance_of(Tempfile)
+    end
+
+    it 'should have the correct url' do
+      @ac.should_receive(:open).with("http://thetvdb.com/api/4F5EC797A9F93512/series/71663/all/en.zip")
+      @ac.create_handle_for_zip(@series.remote_id)
     end
   end
 
