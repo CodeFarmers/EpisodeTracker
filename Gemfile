@@ -12,6 +12,7 @@ gem 'therubyracer'
 gem 'devise'
 
 group :development, :test do
+  gem 'cancan'
   gem 'rspec-rails'
   gem 'awesome_print'
   gem 'rubyzip'
