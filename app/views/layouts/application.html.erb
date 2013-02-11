@@ -11,11 +11,10 @@
     <%= render 'layouts/header' %>
     </div>
     <div class="hero-unit">
-      <% unless flash[:alert].blank? && flash[:notice].blank? %>
-        <p class="notice"><%= notice%></p>
-        <p class="alert"><%= alert%></p>
-      <% end %>
+      <%= render 'layouts/flash_messages' %>
+
         <%= yield %>
+
     </div>
 </body>
 </html>
