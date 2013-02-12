@@ -1,4 +1,8 @@
-<div class="span4">
+<div class="span5 offset2">
   <h5>Available series:</h5>
-  Some series names
+  <ul>
+    <% @series.each do |series| %>
+        <li><%= series.name %> | <%= link_to "get episodes", "/episodes/create" %></li>
+    <% end %>
+  </ul>
 </div>
