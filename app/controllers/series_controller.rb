@@ -1,4 +1,5 @@
 class SeriesController < ApplicationController
+  before_filter :authenticate_user!
   def find_or_create
     if params[:name].blank?
       flash.now[:alert] = "Why don't you try filling in the field?"
@@ -25,6 +26,6 @@ class SeriesController < ApplicationController
   end
 
   def search
-
+    authorize! :manage, :all
   end
 end
