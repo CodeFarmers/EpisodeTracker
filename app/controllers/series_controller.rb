@@ -9,11 +9,13 @@ class SeriesController < ApplicationController
         render :show
       else
         ac = ApiConnector.new
-        @remote_series = ac.get_series_from_remote(params[:name])
-        @remote_series.each do |id, series|
-          Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
+        remote_series = ac.get_series_from_remote(params[:name])
+        series_array = []
+        remote_series.each do |id, series|
+          series_array << Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
         end
-        if @remote_series.length == 1
+        if remote_series.length == 1
+          @series = series_array.first
           render :show
         else
           render :select_for_show
