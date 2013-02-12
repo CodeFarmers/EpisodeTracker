@@ -4,8 +4,12 @@ describe SeriesController do
 
     describe "POST 'find_or_create'" do
 
+      before { login_admin }
+
       context 'with an empty name' do
-        before(:each) { post :find_or_create, :name => "" }
+        before(:each) do
+          post :find_or_create, :name => ""
+        end
 
         its(:response) { should render_template :search }
 
@@ -64,6 +68,25 @@ describe SeriesController do
           response.should render_template @series
         end
       end
+    end
+  end
+
+  describe "GET 'search'" do
+
+    it "should work for admins" do
+      login_admin
+      get :search
+      response.should be_success
+    end
+
+    it "should not work for non-admins" do
+      login_user
+      expect { get :search }.to raise_error(CanCan::AccessDenied)
+    end
+
+    it "should redirect to the sign in page if not logged in" do
+      get :search
+      response.should redirect_to new_user_session_path
     end
   end
 end
