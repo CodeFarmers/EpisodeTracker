@@ -7,6 +7,7 @@ describe Series do
   subject { @series }
 
   it { should respond_to(:name) }
+  it { should have_many(:episodes) }
 
   describe "when name is not present" do
     before { @series.name = "" }
