@@ -1,5 +1,8 @@
 <div class="hero-unit">
-  All hail the Admin
+  <h3>Admin rights are the best</h3>
   <br />
-  <%= link_to "Copy over a series from thetvdb.com", "/series/search" %>
+  <div class="span3">
+    <%= link_to "Copy over a series from thetvdb.com", "/series/search" %>
+  </div>
+  <%= render :partial => "shared/series_block" %>
 </div>
