@@ -1,8 +1,8 @@
 <div class="hero-unit">
   <h2>Your search returned the following results:</h2><br />
   <% @series_array.each do |series| %>
-      <h4><%= series[:series_name]%></h4>
-      <h6><%= series[:series_overview] %></h6>
+      <h4><%= series.name %></h4>
+      <h6><%= series.overview %></h6>
       <br/>
   <% end %>
 </div>
