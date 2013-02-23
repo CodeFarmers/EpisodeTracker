@@ -25,7 +25,7 @@ describe SeriesController do
           context 'when only one result is found remotely' do
 
             before(:each) do
-              ApiConnector.any_instance.stub(:get_series_from_remote).and_return({ 0 => { :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview"}})
+              ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview" }] )
               post :find_or_create, :name => "the simpsons"
               @series = Series.find_by_name("The Simpsons")
             end
@@ -42,7 +42,7 @@ describe SeriesController do
           context 'when more than one result is found remotely' do
 
             before(:each) do
-              ApiConnector.any_instance.stub(:get_series_from_remote).and_return({ 0 => { :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview"}, 1 => { :series_id => "555552", :series_name => "Jessica Simpson's The Price of Beauty"}})
+              ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview"}, { :series_id => "555552", :series_name => "Jessica Simpson's The Price of Beauty" }] )
               post :find_or_create, :name => "the simpsons"
             end
 

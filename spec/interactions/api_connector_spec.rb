@@ -81,24 +81,24 @@ describe ApiConnector do
 
       before(:all) do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
-        @series_hash = @ac.get_series_from_remote("the simpsons")
+        @series_list = @ac.get_series_from_remote("the simpsons")
       end
 
-      it 'should return the series as a hash' do
-        @series_hash.should be_instance_of(Hash)
+      it 'should return the series as an array' do
+        @series_list.should be_instance_of(Array)
       end
 
       it 'should have all series names' do
-        @series_hash.length.times do
-          @series_hash[0][:series_name].should eq("The Simpsons")
-          @series_hash[1][:series_name].should eq("Jessica Simpson's The Price of Beauty")
+        @series_list.length.times do
+          @series_list[0][:series_name].should eq("The Simpsons")
+          @series_list[1][:series_name].should eq("Jessica Simpson's The Price of Beauty")
         end
       end
 
       it 'should have all the series remote ids' do
-        @series_hash.length.times do
-          @series_hash[0][:series_id].should eq("71663")
-          @series_hash[1][:series_id].should eq("153221")
+        @series_list.length.times do
+          @series_list[0][:series_id].should eq("71663")
+          @series_list[1][:series_id].should eq("153221")
         end
       end
     end
@@ -107,11 +107,11 @@ describe ApiConnector do
 
       before(:all) do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
-        @series_hash = @ac.get_series_from_remote("the simpsons")
+        @series_list = @ac.get_series_from_remote("the simpsons")
       end
 
       it 'should not receive the next elements overview' do
-        @series_hash[3][:overview].should be_nil
+        @series_list[3][:overview].should be_nil
       end
     end
 
