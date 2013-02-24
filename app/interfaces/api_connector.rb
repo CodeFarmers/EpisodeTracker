@@ -29,7 +29,6 @@ class ApiConnector
 
   def create_series_list(xml)
     series = elements_from_xml("Series", xml)
-    ap series
     series_list = []
     series.each do |series|
       id = series.elements["seriesid"].text
