@@ -28,14 +28,14 @@ class ApiConnector
   end
 
   def create_series_list(xml)
-    series_ids = elements_from_xml("seriesid", xml)
-    series_names = elements_from_xml("SeriesName", xml)
-    series_overviews = elements_from_xml("Overview", xml)
-    ##When an overview is not present, wrong series get the wrong overviews
-    ap series_overviews
+    series = elements_from_xml("Series", xml)
+    ap series
     series_list = []
-    series_ids.length.times do |i|
-      series_list << {:series_id => series_ids[i].try(:text), :series_name => series_names[i].try(:text), :series_overview => series_overviews[i].try(:text)}
+    series.each do |series|
+      id = series.elements["seriesid"].text
+      name = series.elements["SeriesName"].text
+      overview = series.elements["Overview"].try(:text)
+      series_list << {:series_id => id, :series_name => name, :series_overview => overview}
     end
     series_list
   end
@@ -45,7 +45,6 @@ class ApiConnector
     res = Net::HTTP.get_response(url)
     res.body
   end
-  See Dad Run
   def create_handle_for_zip(series_id)
     url = @api_url + "/series/#{series_id}/all/en.zip"
     open(url)
