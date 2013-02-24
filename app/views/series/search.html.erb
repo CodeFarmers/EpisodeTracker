@@ -1,9 +1,12 @@
-<div class="hero-unit">
+<div>
   <h2>Look for a series</h2><br />
 
   <%= form_tag("/series/find_or_create", :method => "get") do %>
-    <div><%= label_tag :name %><br />
-         <%= text_field_tag :name%></div>
-    <div><%= submit_tag "Search", :class => "btn" %></div>
+      <%= label_tag :name %><br />
+      <div class="input-append">
+         <%= text_field_tag :appendedInputButton %>
+         <%= submit_tag "Search", :class => "btn" %>
+    </div>
+
   <% end %>
 </div>
