@@ -29,7 +29,7 @@ describe EpisodesController do
         subject { first_episode }
 
         it "should redirect to the series controller show action" do
-          response.should redirect_to "/series/show"
+          response.should redirect_to series_path(@series)
         end
 
         its(:name) { should == "This episode has no name" }

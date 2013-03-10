@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212193958) do
+ActiveRecord::Schema.define(:version => 20130310202646) do
 
   create_table "episodes", :force => true do |t|
     t.string   "name"
@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(:version => 20130212193958) do
   create_table "series", :force => true do |t|
     t.string   "name"
     t.text     "overview"
-    t.string   "remote_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "remote_id",  :limit => 255
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -4,9 +4,11 @@
         <% @series.each do |series| %>
             <li><%= series.name %> | </li>
             <li>
-              <%= form_tag("/episodes/create") do %>
-                <%= hidden_field_tag :remote_id, series.remote_id %>
-                <%= submit_tag "den tekst" %>
+              <% if series.episodes %>
+                  <%= form_tag("/episodes/create") do %>
+                    <%= hidden_field_tag :remote_id, series.remote_id %>
+                    <%= submit_tag "den tekst" %>
+                  <% end %>
               <% end %>
             </li>
         <% end %>

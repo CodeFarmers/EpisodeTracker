@@ -10,11 +10,14 @@ describe Series do
   it { should have_many(:episodes) }
 
   describe "when name is not present" do
+
     before { @series.name = "" }
+
     it { should_not be_valid }
   end
 
   describe "when name already exists" do
+
     before do
       same_series = @series.dup
       same_series.save

@@ -1,7 +1,9 @@
 EpisodeTracker::Application.routes.draw do
 
   get "admin_config/show"
-  get "series/create"
+  #get "series/create"
+  #get "series/show"
+  resources :series
   get "series/search"
   match "series/find_or_create" => "series#find_or_create"
   match "episodes/create" => "episodes#create"

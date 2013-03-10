@@ -11,6 +11,7 @@ class EpisodesController < ApplicationController
       name.nil? ? name = "This episode has no name" : name
       Episode.create!(:name => name, :overview => overview, :series_id => params[:remote_id])
     end
-    redirect_to "/series/show"
+    @series = Series.where(:remote_id => params[:remote_id]).first
+    redirect_to series_path(@series)
   end
 end
