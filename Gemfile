@@ -25,6 +25,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'simplecov'
   gem 'shoulda-matchers'
+  gem 'fakeweb'
 end
 
 # Gems used only for assets and not required

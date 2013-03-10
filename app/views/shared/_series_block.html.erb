@@ -1,8 +1,14 @@
 <div class="hero-unit span5 offset2">
   <h5>Available series:</h5>
-  <ul>
-    <% @series.each do |series| %>
-        <li><%= series.name %> | <%= link_to "get episodes", "/episodes/create" %></li>
-    <% end %>
-  </ul>
+      <ul>
+        <% @series.each do |series| %>
+            <li><%= series.name %> | </li>
+            <li>
+              <%= form_tag("/episodes/create") do %>
+                <%= hidden_field_tag :remote_id, series.remote_id %>
+                <%= submit_tag "den tekst" %>
+              <% end %>
+            </li>
+        <% end %>
+      </ul>
 </div>

@@ -60,6 +60,10 @@ describe ApiConnector do
           )
     @empty_xml = %q(<?xml version="1.0" encoding="UTF-8" ?><Error>seriesname is required</Error>)
     @ac = ApiConnector.new
+    @time_xml = %q(<?xml version="1.0" encoding="UTF-8" ?>
+                <Items>
+                  <Time>1362939962</Time>
+                </Items>)
   end
   describe 'initialize' do
     it 'should instantiate an apiconnector' do
@@ -71,6 +75,7 @@ describe ApiConnector do
   describe 'set_previous_time' do
     it 'should set the previous time' do
       @ac.should respond_to(:set_previous_time)
+      @ac.should_receive(:get_response_body_for).and_return(@time_xml)
       previous_time = @ac.set_previous_time
       previous_time.should_not be_nil
       previous_time.should be_instance_of(String)

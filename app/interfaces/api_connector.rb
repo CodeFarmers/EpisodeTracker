@@ -44,6 +44,7 @@ class ApiConnector
     res = Net::HTTP.get_response(url)
     res.body
   end
+
   def create_handle_for_zip(series_id)
     url = @api_url + "/series/#{series_id}/all/en.zip"
     open(url)

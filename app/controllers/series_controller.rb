@@ -28,4 +28,8 @@ class SeriesController < ApplicationController
   def search
     authorize! :manage, :all
   end
+
+  def show
+
+  end
 end

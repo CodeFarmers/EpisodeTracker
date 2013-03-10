@@ -13,6 +13,8 @@ require 'launchy'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+FakeWeb.allow_net_connect = false
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -44,6 +46,7 @@ RSpec.configure do |config|
     end
 
     config.before(:each) do
+      FakeWeb.clean_registry
       DatabaseCleaner.start
     end
 

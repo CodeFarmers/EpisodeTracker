@@ -9,7 +9,7 @@ FactoryGirl.define do
     overview "The Overview"
 
     sequence :remote_id do |n|
-      "{n}"
+      "#{n}"
     end
   end
 end
