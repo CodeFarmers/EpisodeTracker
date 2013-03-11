@@ -12,6 +12,9 @@ class EpisodesController < ApplicationController
       Episode.create!(:name => name, :overview => overview, :series_id => params[:remote_id])
     end
     @series = Series.where(:remote_id => params[:remote_id]).first
-    redirect_to series_path(@series)
+    redirect_to series_episodes_path(@series)
+  end
+
+  def index
   end
 end

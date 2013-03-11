@@ -29,7 +29,7 @@ describe EpisodesController do
         subject { first_episode }
 
         it "should redirect to the series controller show action" do
-          response.should redirect_to series_path(@series)
+          response.should redirect_to series_episodes_path(@series)
         end
 
         its(:name) { should == "This episode has no name" }
@@ -64,6 +64,30 @@ describe EpisodesController do
         post :create, :remote_id => 0
         response.should redirect_to "/users/sign_in"
       end
+    end
+  end
+
+  describe "GET 'index'" do
+
+    before(:each) do
+      @series = FactoryGirl.create(:series)
+    end
+
+    it "should not be rendered for an unauthenticated user" do
+      get :index, :series_id => @series
+      response.should redirect_to new_user_session_path
+    end
+
+    it "should be rendered for a user" do
+      login_user
+      get :index, :series_id => @series
+      response.should render_template("index")
+    end
+
+    it "should be rendered for an admin" do
+      login_admin
+      get :index, :series_id => @series
+      response.should render_template("index")
     end
   end
 end

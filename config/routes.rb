@@ -1,14 +1,19 @@
 EpisodeTracker::Application.routes.draw do
 
+
   get "admin_config/show"
   #get "series/create"
   #get "series/show"
-  resources :series
+  #resources :series
   get "series/search"
   match "series/find_or_create" => "series#find_or_create"
   match "episodes/create" => "episodes#create"
   devise_for :users
   get "pages/home"
+
+  resources :series do
+    resources :episodes
+  end
 
 
   # The priority is based upon order of creation:
