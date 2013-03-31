@@ -2,12 +2,11 @@
   <h5>Available series:</h5>
       <ul>
         <% @series.each do |series| %>
-            <li><%= series.name %> | </li>
-            <li>
+            <li> <%= series.name %> |
               <% if series.episodes %>
-                  <%= form_tag("/episodes/create") do %>
+                  <%= form_tag("/episodes/create", :class => "inline-form") do %>
                     <%= hidden_field_tag :remote_id, series.remote_id %>
-                    <%= submit_tag "den tekst" %>
+                    <%= submit_tag "Get episodes", :class => "submit-link" %>
                   <% end %>
               <% end %>
             </li>

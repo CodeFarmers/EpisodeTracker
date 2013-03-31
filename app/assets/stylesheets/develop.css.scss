@@ -10,3 +10,19 @@ a {
 .hero-unit {
   font-size:  14px;
 }
+
+.submit-link {
+  font-size: 13px;
+  background-color: transparent;
+  border: none;
+  color: #0088cc;
+  cursor: pointer;
+}
+
+.submit-link:hover{
+  text-decoration: underline;
+}
+
+.inline-form{
+  display: inline;
+}
