@@ -1,7 +1,6 @@
 <div class="hero-unit">
-  <h2>This is the details page for <%= @series.name%></h2><br />
+  <h2>This is the episode list for <%= @series.name%></h2><br />
   <h6><%= @series.overview %></h6>
-  <%= @series.episodes %>
   <ul id="episodes">
     <% @series.episodes.each do |episode| %>
       <li>
