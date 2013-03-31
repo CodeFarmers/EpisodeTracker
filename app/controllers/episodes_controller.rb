@@ -16,5 +16,7 @@ class EpisodesController < ApplicationController
   end
 
   def index
+    @series = Series.find(params[:series_id])
+    #@episodes = Episode.find_all_by_series_id(@series.remote_id)
   end
 end

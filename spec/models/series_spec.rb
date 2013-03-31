@@ -2,12 +2,16 @@ require 'spec_helper'
 
 describe Series do
 
-  before { @series = Series.new(:name => "Arrested Development") }
+  before { @series = Series.new(:name => "Arrested Development", :remote_id => "123") }
 
   subject { @series }
 
   it { should respond_to(:name) }
   it { should have_many(:episodes) }
+
+  it "should be able to get saved" do
+    expect { @series.save! }.to change(Series, :count).by(1)
+  end
 
   describe "when name is not present" do
 

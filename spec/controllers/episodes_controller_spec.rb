@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe EpisodesController do
+  render_views
 
   describe "POST 'create'" do
 
@@ -78,16 +79,38 @@ describe EpisodesController do
       response.should redirect_to new_user_session_path
     end
 
-    it "should be rendered for a user" do
-      login_user
-      get :index, :series_id => @series
-      response.should render_template("index")
-    end
+    context "for an authenticated user" do
 
-    it "should be rendered for an admin" do
-      login_admin
-      get :index, :series_id => @series
-      response.should render_template("index")
+      it "should be rendered for an admin" do
+        login_admin
+        get :index, :series_id => @series
+        response.should render_template("index")
+      end
+
+      context "for a regular user" do
+
+        before(:each) do
+          @episode1 = FactoryGirl.create(:episode, :series_id => @series.remote_id)
+          @episode2 = FactoryGirl.create(:episode, :series_id => @series.remote_id)
+          login_user
+          get :index, :series_id => @series
+        end
+
+        it { should render_template("index") }
+
+        it "should show the series name" do
+          response.body.should have_content("This is the details page for #{@series.name}")
+        end
+
+        it "should show the episodes list" do
+          response.body.should have_selector("ul#episodes li")
+        end
+
+        it "should contain the name of the episodes" do
+          response.body.should have_content(@episode1.name)
+          response.body.should have_content(@episode2.name)
+        end
+      end
     end
   end
 end
