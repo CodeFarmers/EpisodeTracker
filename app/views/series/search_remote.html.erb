@@ -1,0 +1,11 @@
+<div>
+  <h2>Look for a series on thetvdb.com</h2><br />
+
+  <%= form_tag("/series/search_remote") do %>
+      <%= label_tag :name %><br />
+      <div class="input-append">
+        <%= text_field_tag :name %>
+        <%= submit_tag "Search", :class => "btn" %>
+      </div>
+  <% end %>
+</div>

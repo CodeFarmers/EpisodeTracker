@@ -99,7 +99,7 @@ describe EpisodesController do
         it { should render_template("index") }
 
         it "should show the series name" do
-          response.body.should have_content("This is the details page for #{@series.name}")
+          response.body.should have_content("This is the episode list for #{@series.name}")
         end
 
         it "should show the episodes list" do

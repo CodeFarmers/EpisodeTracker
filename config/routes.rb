@@ -2,6 +2,8 @@ EpisodeTracker::Application.routes.draw do
 
 
   get "admin_config/show"
+  get "admin_config/search"
+  post "series/search_remote"
   #get "series/create"
   #get "series/show"
   #resources :series

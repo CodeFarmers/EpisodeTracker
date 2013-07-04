@@ -5,4 +5,8 @@ class AdminConfigController < ApplicationController
     @series = Series.all
     render :show
   end
+
+  def search
+    render "series/search_remote"
+  end
 end
