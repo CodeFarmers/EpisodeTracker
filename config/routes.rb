@@ -3,11 +3,11 @@ EpisodeTracker::Application.routes.draw do
 
   get "admin_config/show"
   get "admin_config/search"
-  post "series/search_remote"
+  post "admin_config/search_remote"
   #get "series/create"
   #get "series/show"
   #resources :series
-  get "series/search"
+  #get "series/search"
   match "series/find_or_create" => "series#find_or_create"
   match "episodes/create" => "episodes#create"
   devise_for :users
