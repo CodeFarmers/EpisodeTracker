@@ -20,13 +20,10 @@ class AdminConfigController < ApplicationController
     else
       ac = ApiConnector.new
       remote_series = ac.get_series_from_remote(params[:name])
-
-
-
+      @series = []
       remote_series.each do |series|
-        Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
+        @series << Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
       end
-
       render "admin_config/confirm_search"
     end
   end

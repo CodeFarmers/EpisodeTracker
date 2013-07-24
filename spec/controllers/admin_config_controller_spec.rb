@@ -116,8 +116,17 @@ describe AdminConfigController do
 
           its(:response) { should render_template :confirm_search }
 
-          it 'should show the series details' do
-            page.should have_content("The Simpsons")
+          it 'should show the series name' do
+            response.body.should have_content("The Simpsons")
+          end
+
+          it 'should show the series overview' do
+            response.body.should have_content("The overview")
+          end
+
+          it 'should show an inline form for getting the episodes' do
+            response.body.should have_css("input.submit-link")
+            response.body.should have_xpath("//input[@value='Get episodes']")
           end
         end
 

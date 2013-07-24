@@ -1,7 +1,16 @@
 <div>
   <h2>Is this what you were looking for?</h2><br />
 
-  <ul>
-    <li>This is a series</li>
-  </ul>
+  <dl>
+    <% @series.each do |series| %>
+      <dt>
+        <%= series.name%> |
+        <%= form_tag("/episodes/create", :class => "inline-form") do %>
+          <%= hidden_field_tag :remote_id, series.remote_id %>
+          <%= submit_tag "Get episodes", :class => "submit-link" %>
+        <% end %>
+      </dt>
+      <dd><%= series.overview %></dd>
+    <% end %>
+  </dl>
 </div>
