@@ -105,7 +105,7 @@ describe AdminConfigController do
           before(:each) do
             ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview" }] )
             post :search_remote, :name => "the simpsons"
-            @series = Series.find_by_name("The Simpsons")
+            #@series = Series.find_by_name("The Simpsons")
           end
 
           it 'should create the found series locally' do
@@ -114,7 +114,11 @@ describe AdminConfigController do
 
           its(:response) { should be_success }
 
-          its(:response) { should render_template @series }
+          its(:response) { should render_template :confirm_search }
+
+          it 'should show the series details' do
+            page.should have_content("The Simpsons")
+          end
         end
 
         context 'when more than one result is found remotely' do
