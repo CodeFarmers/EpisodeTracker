@@ -7,6 +7,7 @@ class AdminConfigController < ApplicationController
   end
 
   def search
+    authorize! :manage, :all
     render "series/search_remote"
   end
 end
