@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'therubyracer'
 gem 'devise'
+gem 'will_paginate', '> 3.0'
 
 group :development, :test do
   gem 'cancan'

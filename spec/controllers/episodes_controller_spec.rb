@@ -29,7 +29,7 @@ describe EpisodesController do
         let(:first_episode) { @episodes.first }
         subject { first_episode }
 
-        it "should redirect to the series controller show action" do
+        it "should redirect to the episode index for the series" do
           response.should redirect_to series_episodes_path(@series)
         end
 
@@ -45,6 +45,11 @@ describe EpisodesController do
           @episodes.each do |episode|
             episode.series_id.should == @series.remote_id
           end
+        end
+
+        it "should not get the episodes if they are already present for the series" do
+          post :create, :remote_id => @series.remote_id
+          flash.now[:alert].should eq("It looks like you already have the episodes for that series!")
         end
 
         context "when the attributes are present" do
