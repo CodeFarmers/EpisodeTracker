@@ -1,8 +1,10 @@
 <div class="hero-unit">
   <h2>This is the episode list for <%= @series.name%></h2><br />
   <h6><%= @series.overview %></h6>
+
+  <%= will_paginate @episodes %>
   <ul id="episodes">
-    <% @series.episodes.each do |episode| %>
+    <% @episodes.each do |episode| %>
       <li>
         <%= episode.name  %>
       </li>

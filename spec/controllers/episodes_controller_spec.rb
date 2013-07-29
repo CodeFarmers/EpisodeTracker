@@ -94,28 +94,57 @@ describe EpisodesController do
 
       context "for a regular user" do
 
+
+        let(:series) { FactoryGirl.create(:series) }
         before(:each) do
-          @episode1 = FactoryGirl.create(:episode, :series_id => @series.remote_id)
-          @episode2 = FactoryGirl.create(:episode, :series_id => @series.remote_id)
+          @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht")
+          @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht")
           login_user
-          get :index, :series_id => @series
+          get :index, :series_id => series
         end
+
 
         it { should render_template("index") }
 
         it "should show the series name" do
-          response.body.should have_content("This is the episode list for #{@series.name}")
+          response.body.should have_content("This is the episode list for #{series.name}")
         end
 
         it "should show the episodes list" do
+          ap series
+          ap series.episodes
+
           response.body.should have_selector("ul#episodes li")
         end
 
         it "should contain the name of the episodes" do
-          response.body.should have_content(@episode1.name)
-          response.body.should have_content(@episode2.name)
+          response.body.should have_content(series.episodes.first.name)
+          response.body.should have_content(series.episodes.second.name)
         end
       end
+
+      context "pagination"
+
+        let(:series) { FactoryGirl.create(:series) }
+
+        it "will not paginate when there are less than 10 episodes" do
+          9.times do |i|
+            series.episodes.create(name: "De aflevering#{i}", overview: "Het overzicht")
+          end
+          login_user
+          get :index, :series_id => series
+          response.body.should_not have_selector("div.pagination")
+        end
+
+        it "will paginate when there are more than 10 episodes" do
+          11.times do |i|
+            series.episodes.create(name: "De aflevering#{i}", overview: "Het overzicht")
+          end
+          login_user
+          get :index, :series_id => series
+          ap response.body
+          response.body.should have_selector("div.pagination")
+        end
     end
   end
 end
