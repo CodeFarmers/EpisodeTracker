@@ -6,7 +6,7 @@ class EpisodesController < ApplicationController
     @ac = ApiConnector.new
     @series = Series.where(:remote_id => params[:remote_id]).first
     if @series.episodes.present?
-      flash.now[:alert] = "It looks like you already have the episodes for that series!"
+      flash[:alert] = "It looks like you already have the episodes for that series!"
     else
       episodes = @ac.get_episodes(params[:remote_id])
       episodes.each do |episode|

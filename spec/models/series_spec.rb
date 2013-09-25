@@ -7,6 +7,7 @@ describe Series do
   subject { @series }
 
   it { should respond_to(:name) }
+  it { should respond_to(:remote_id) }
   it { should have_many(:episodes) }
 
   it "should be able to get saved" do
@@ -29,4 +30,23 @@ describe Series do
 
     it { should_not be_valid }
   end
+
+  describe "Search" do
+
+    before do
+      @simpsons = FactoryGirl.create(:series, :name => "Simpsons")
+      @american = FactoryGirl.create(:series, :name => "American Dad")
+    end
+
+    it "should return simpsons when I search for 'Simpsons'" do
+      results = Series.search("Simpsons")
+      results.should include(@simpsons)
+    end
+
+    it "should return all series when no search term is provided" do
+      results = Series.search
+      results.should include(@simpsons, @american)
+    end
+  end
+
 end

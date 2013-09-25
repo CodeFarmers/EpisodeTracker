@@ -111,9 +111,6 @@ describe EpisodesController do
         end
 
         it "should show the episodes list" do
-          ap series
-          ap series.episodes
-
           response.body.should have_selector("ul#episodes li")
         end
 
@@ -142,7 +139,6 @@ describe EpisodesController do
           end
           login_user
           get :index, :series_id => series
-          ap response.body
           response.body.should have_selector("div.pagination")
         end
     end
