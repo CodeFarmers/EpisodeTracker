@@ -1,11 +1,11 @@
-<div>
+<div class='hero-unit'>
   <h2>Try the search box below to find a series</h2><br />
 
-  <%= form_tag("/admin_config/search_remote") do %>
-      <%= label_tag :name, 'Look for a series by it\'s title' %><br />
+  <%= form_tag(series_index_path, method: 'get', class: 'form-search') do %>
+      <%= label_tag :name, 'Look for a series by it\'s name' %><br />
       <div class="input-append">
-        <%= text_field_tag :name %>
-        <%= submit_tag "Search", :class => "btn" %>
+        <%= text_field_tag :search, nil, placeholder: 'Search...', class: 'search-query' %>
+        <%= submit_tag "Search", name: nil, :class => "btn" %>
       </div>
   <% end %>
 </div>

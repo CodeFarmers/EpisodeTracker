@@ -29,6 +29,7 @@ class SeriesController < ApplicationController
 
   def index
     @series = Series.search(params[:search])
+    render :index
   end
 end
 

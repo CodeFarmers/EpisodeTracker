@@ -1,0 +1,10 @@
+<div class='hero-unit'>
+  <h3>Got <%= pluralize(@series.length, 'result') %>:</h3><br />
+
+  <dl>
+    <% @series.each do |series| %>
+        <dt><%= series.name%></dt>
+        <dd><%= series.overview %></dd>
+    <% end %>
+  </dl>
+</div>

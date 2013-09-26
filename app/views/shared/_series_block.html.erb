@@ -1,15 +1,24 @@
-<div class="hero-unit span5 offset2">
+<aside class="span4 hero-unit">
   <h5>Available series:</h5>
-      <ul>
-        <% @series.each do |series| %>
-            <li> <%= series.name %> |
-              <% if series.episodes %>
-                  <%= form_tag("/episodes/create", :class => "inline-form") do %>
-                    <%= hidden_field_tag :remote_id, series.remote_id %>
-                    <%= submit_tag "Get episodes", :class => "submit-link" %>
-                  <% end %>
-              <% end %>
-            </li>
-        <% end %>
-      </ul>
-</div>
+      <table class='table table-hover'>
+        <thead>
+        </thead>
+        <tbody>
+
+          <% @series.each do |series| %>
+                <tr>
+                  <td> <%= series.name %>
+                      <td>
+                        <% if series.episodes %>
+                            <%= form_tag("/episodes/create") do %>
+                                <%= hidden_field_tag :remote_id, series.remote_id %>
+                                <%= submit_tag "Get episodes", :class => "submit-link" %>
+                            <% end %>
+                        <% end %>
+                      </td>
+                  </td>
+               </tr>
+           <% end %>
+        </tbody>
+      </table>
+</aside>

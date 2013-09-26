@@ -1,8 +1,10 @@
-<div>
-  <h4>Admin rights are the best</h4>
-  <br />
-  <div class="span3">
-    <%= link_to "Copy over a series from thetvdb.com", "/admin_config/search" %>
-  </div>
-  <%= render :partial => "shared/series_block" %>
+<div class='row'>
+    <div class='span5 hero-unit'>
+          <h4>Admin rights are the best</h4>
+          <br />
+          <div>
+            <%= link_to "Copy over a series from thetvdb.com", "/admin_config/search" %>
+          </div>
+    </div>
+    <%= render :partial => "shared/series_block" %>
 </div>

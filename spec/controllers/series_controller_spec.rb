@@ -31,15 +31,18 @@ describe SeriesController do
 
   describe "GET index" do
 
+    let(:series) { FactoryGirl.create(:series) }
+
     it "should query the model for the needed results" do
-      name = "The Simpsons"
-      post :search, :name => name
-      Series.should_receive(:search).with(name)
+      login_user
+      Series.should_receive(:search).with(series.name).and_return([series])
+      get :index, :search => series.name
     end
 
     it "should show the returned results" do
-      post :search, :name => "The Simpsons"
-      response.should have_content("The Simpsons")
+      login_user
+      get :index, :search => series.name
+      response.body.should have_content(series.name)
     end
   end
 end
