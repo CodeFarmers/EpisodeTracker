@@ -28,12 +28,7 @@ class SeriesController < ApplicationController
   #end
 
   def index
-    if params[:search]
-      #Search for the value passed in the form
-      @series = Series.search(params[:search])
-    else
-      #Just return all series
-    end
+    @series = Series.search(params[:search])
   end
 end
 

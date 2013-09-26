@@ -3,9 +3,9 @@ class Series < ActiveRecord::Base
   attr_accessible :name, :overview, :remote_id
   validates :name, presence: true, uniqueness: true
 
-  def self.search(*search)
+  def self.search(search)
     if search
-      Series.where("name like ?", search)
+      Series.where("name like ?", "%" + search + "%")
     else
       Series.all
     end
