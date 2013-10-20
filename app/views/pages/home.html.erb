@@ -1,9 +1,9 @@
 <% if user_signed_in? %>
-    <div class="hero-unit">
+    <div class="jumbotron">
       <h5>
       You are now signed in as <%= current_user.email %>
       </h5>
     </div>
 <% else %>
-    <div class="hero-unit">How about signing up?</div>
+    <div class="jumbotron">How about signing up?</div>
 <% end %>

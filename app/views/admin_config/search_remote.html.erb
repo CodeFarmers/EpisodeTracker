@@ -1,11 +1,13 @@
-<div class='hero-unit'>
-  <h2>Look for a series on thetvdb.com</h2><br />
+<div class="jumbotron">
+  <h4>Look for a series on thetvdb.com</h4><br />
 
-  <%= form_tag("/admin_config/search_remote") do %>
-      <%= label_tag :name, 'Look for a series by it\'s title' %><br />
-      <div class="input-append">
-        <%= text_field_tag :name %>
-        <%= submit_tag "Search", :class => "btn" %>
+  <%= form_tag("/admin_config/search_remote", class: "form-search") do %>
+      <%= label_tag :name, "Look for a series by it\'s title" %><br />
+      <div class="input-group col-md-5">
+        <%= text_field_tag :name, nil, placeholder: "Search...", class: "form-control" %>
+        <div class="input-group-btn">
+          <%= submit_tag "Search", :class => "btn-default btn" %>
+        </div>
       </div>
   <% end %>
 </div>

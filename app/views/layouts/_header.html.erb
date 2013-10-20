@@ -1,21 +1,20 @@
-<header class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <nav>
-        <ul class="nav pull-right">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="navbar-default container">
+    <div class="navbar-brand">
+      EpisodeTracker
+    </div>
+        <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Home", '/pages/home' %></li>
           <li><%= link_to "Search", '/series/search' %></li>
           <% if !user_signed_in? %>
-            <li><%= link_to "Sign up", new_user_registration_path %></li>
-            <li><%= link_to "Sign in", new_user_session_path %></li>
+              <li><%= link_to "Sign up", new_user_registration_path %></li>
+              <li><%= link_to "Sign in", new_user_session_path %></li>
           <% else %>
               <% if can? :manage, :all %>
-                <li><%= link_to "Configure", admin_config_show_path %></li>
+                  <li><%= link_to "Configure", admin_config_show_path %></li>
               <% end %>
-            <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+              <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
           <% end %>
         </ul>
-      </nav>
-    </div>
   </div>
-</header>
+</nav>

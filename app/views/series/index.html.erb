@@ -1,10 +1,8 @@
-<div class='hero-unit'>
-  <h3>Got <%= pluralize(@series.length, 'result') %>:</h3><br />
-
-  <dl>
-    <% @series.each do |series| %>
-        <dt><%= series.name%></dt>
-        <dd><%= series.overview %></dd>
-    <% end %>
-  </dl>
+<div class='jumbotron'>
+  <h4>Got <%= pluralize(@series.length, 'result') %>:</h4>
+      <div class="list-group">
+          <% @series.each do |series| %>
+              <a href="#" class="list-group-item"><%= series.name%></a>
+          <% end %>
+      </div>
 </div>
