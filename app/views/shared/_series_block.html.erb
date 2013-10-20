@@ -7,10 +7,10 @@
 
           <% @series.each do |series| %>
                 <tr>
-                  <td> <%= series.name %>
+                  <td> <%= truncate(series.name, length: 23) %>
                       <td>
                         <% if series.episodes %>
-                            <%= form_tag("/episodes/create") do %>
+                            <%= form_tag("/episodes/create", class: "inline-form") do %>
                                 <%= hidden_field_tag :remote_id, series.remote_id %>
                                 <%= submit_tag "Get episodes", :class => "submit-link" %>
                             <% end %>
