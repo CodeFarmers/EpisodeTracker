@@ -1,8 +1,8 @@
 <div class='jumbotron'>
-  <h4>Got <%= pluralize(@series.length, 'result') %>:</h4>
+  <h4><%= pluralize(@series.length, 'result') %> matched your search:</h4>
       <div class="list-group">
           <% @series.each do |series| %>
-              <a href="#" class="list-group-item"><%= series.name%></a>
+              <a href="<%=series_episodes_path(series)%>" class="list-group-item"><%= series.name%></a>
           <% end %>
       </div>
 </div>

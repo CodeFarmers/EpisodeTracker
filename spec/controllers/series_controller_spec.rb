@@ -32,6 +32,7 @@ describe SeriesController do
   describe "GET index" do
 
     let(:series) { FactoryGirl.create(:series) }
+    let!(:episode) { FactoryGirl.create(:episode, name: 'episode', series_id: series.remote_id) }
 
     it "should query the model for the needed results" do
       login_user
