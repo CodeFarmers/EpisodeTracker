@@ -38,6 +38,7 @@ describe Series do
     let!(:other) { FactoryGirl.create(:series, :name => "The other series") }
     let!(:episode) { FactoryGirl.create(:episode, series_id: other.remote_id) }
     let!(:episode2) { FactoryGirl.create(:episode, series_id: simpsons.remote_id) }
+    let!(:episode3) { FactoryGirl.create(:episode, series_id: simpsons.remote_id) }
 
     it "should be a fuzzy search" do
       results = Series.search("the")
@@ -53,8 +54,13 @@ describe Series do
     it "should only return the series that have episodes" do
       Series.search(nil).should include other
     end
+
     it "should not return series without episodes" do
       Series.search(nil).should_not include american
+    end
+
+    it "should only return each series one time" do
+      Series.search("The Simpsons").length.should eq(1)
     end
   end
 end
