@@ -12,7 +12,7 @@ describe ApplicationHelper do
     end
 
     it "returns correct styles for error" do
-      flash_class(:error).should == "alert alert-warning"
+      flash_class(:error).should == "alert alert-danger"
     end
 
     it "returns correct styles for alert" do
