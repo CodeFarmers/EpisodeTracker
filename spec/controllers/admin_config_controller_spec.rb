@@ -71,7 +71,7 @@ describe AdminConfigController do
     end
   end
 
-  describe "POST 'search_remote'" do
+  describe "GET 'search_remote'" do
 
     context 'as a user without admin rights' do
 
@@ -103,9 +103,10 @@ describe AdminConfigController do
         context 'when only one result is found remotely' do
 
           before(:each) do
-            ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview" }] )
-            post :search_remote, :name => "the simpsons"
-            #@series = Series.find_by_name("The Simpsons")
+            ApiConnector.any_instance.stub(:get_series_from_remote)
+            .and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview" }] )
+
+            xhr :get, :search_remote, :name => "the simpsons"
           end
 
           it 'should create the found series locally' do
@@ -113,20 +114,15 @@ describe AdminConfigController do
           end
 
           its(:response) { should be_success }
+          its(:response) { should render_template :select_for_show}
+          its(:response) { should render_template :search_remote}
 
-          its(:response) { should render_template :confirm_search }
+          it "should return JS" do
+            response.content_type.should == Mime::JS
+          end
 
           it 'should show the series name' do
             response.body.should have_content("The Simpsons")
-          end
-
-          it 'should show the series overview' do
-            response.body.should have_content("The overview")
-          end
-
-          it 'should show an inline form for getting the episodes' do
-            response.body.should have_css("input.submit-link")
-            response.body.should have_xpath("//input[@value='Get episodes']")
           end
         end
 

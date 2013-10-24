@@ -35,8 +35,6 @@ describe EpisodesController do
 
         its(:name) { should == "This episode has no name" }
 
-        its(:overview) { should be_nil }
-
         it "should create all remotely found episodes" do
           Episode.count.should == 148
         end
@@ -58,7 +56,6 @@ describe EpisodesController do
           subject { second_episode }
 
           its(:name) { should == "Original Pilot" }
-          its(:overview) { should include "Francine puts Roger on a diet." }
           its(:series_id) { should == 1212 }
         end
       end

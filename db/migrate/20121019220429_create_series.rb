@@ -3,7 +3,7 @@ class CreateSeries < ActiveRecord::Migration
     create_table :series do |t|
       t.string  :name
       t.text    :overview
-      t.string  :remote_id
+      t.integer :remote_id
 
       t.timestamps
     end

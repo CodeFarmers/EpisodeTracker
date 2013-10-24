@@ -13,17 +13,14 @@ require 'launchy'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-FakeWeb.allow_net_connect = false
+FakeWeb.allow_net_connect = %r[^https?://(localhost|127.0.0.1)]
+
+Capybara.default_driver= :webkit
+Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 10
+
 
 RSpec.configure do |config|
-  # ## Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
-
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

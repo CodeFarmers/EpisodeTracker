@@ -117,7 +117,7 @@ describe ApiConnector do
         @series_list = @ac.get_series_from_remote("the simpsons")
       end
 
-      it 'should not receive the next elements overview' do
+      it 'should not receive the next element\'s overview' do
         @series_list[2][:series_overview].should be_nil
         @series_list[3][:series_overview].should == "This is an overview"
       end

@@ -1,5 +1,7 @@
 class AdminConfigController < ApplicationController
   before_filter :authenticate_user!
+  respond_to :json, :only => [ :search_remote ]
+
   def show
     authorize! :manage, :all
     @series = Series.all
@@ -24,7 +26,7 @@ class AdminConfigController < ApplicationController
       remote_series.each do |series|
         @series << Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
       end
-      render "admin_config/confirm_search"
+    @series
     end
   end
 end

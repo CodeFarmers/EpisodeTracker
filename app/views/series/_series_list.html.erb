@@ -1,0 +1,5 @@
+<div class="list-group">
+  <% @series.each do |series| %>
+      <a href="<%=series_episodes_path(series)%>" class="list-group-item"><%= series.name%></a>
+  <% end %>
+</div>

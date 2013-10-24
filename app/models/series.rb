@@ -7,7 +7,10 @@ class Series < ActiveRecord::Base
 
   def self.search(search)
     if search
-      Series.joins(:episodes).uniq.where("series.name like ?", "%" + search + "%")
+      #ap Series.all
+      #ap Episode.all
+      #ap Series.joins(:episodes).uniq.where("series.name like ?", "%" + search + "%")
+      Series.joins(:episodes).uniq.where("series.name ilike ?", "%" + search + "%")
     else
       Series.joins(:episodes).uniq
     end
