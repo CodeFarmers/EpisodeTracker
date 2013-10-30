@@ -1,12 +1,26 @@
-<h2>Forgot your password?</h2>
+<div class='page-header' xmlns="http://www.w3.org/1999/html">
+    <h3>Forgot your password?</h3>
+</div>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+        <div class="form-group">
+            <div class="col-md-3">
+                <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+                <div><%= f.label :email %><br />
+                    <%= f.email_field :email, class: "form-control" %>
+                </div>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
+                <div>
+                    <%= f.submit "Send me reset password instructions", class: "btn btn-primary" %>
+                </div>
+                <% end %>
+                </br>
 
-<%= render "devise/shared/links" %>
+                <%= render "devise/shared/links" %>
+            </div>
+        </div>
+    </div>
+</div>
