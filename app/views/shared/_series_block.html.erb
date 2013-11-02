@@ -1,17 +1,20 @@
-<aside class="col-md-4 col-md-offset-1 jumbotron">
-  <h5>Available series:</h5>
-      <table class='table table-hover'>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Available series</h3>
+  </div>
+  <div class="panel-body">
+      <table class='table table-striped'>
         <thead>
         </thead>
         <tbody>
           <% @series.each do |series| %>
                 <tr>
-                  <td> <%= truncate(series.name, length: 23) %>
+                  <td> <%= truncate(series.name, length: 40) %>
                       <td>
                         <% if series.episodes %>
-                            <%= form_tag("/episodes/create", class: "inline-form") do %>
+                            <%= form_tag("/episodes/create", class: "inline-form right") do %>
                                 <%= hidden_field_tag :remote_id, series.remote_id %>
-                                <%= submit_tag "Get episodes", :class => "submit-link" %>
+                                <%= submit_tag "Get episodes", :class => "btn btn-primary" %>
                             <% end %>
                         <% end %>
                       </td>
@@ -20,4 +23,7 @@
            <% end %>
         </tbody>
       </table>
-</aside>
+  </div>
+</div>
+
+
