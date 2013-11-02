@@ -2,13 +2,19 @@
   Your search returned <%= pluralize(@series.length, 'result') %>:
 </h4>
 
-<ul class="list-group">
+<table class="table table-striped">
     <% @series.each do |series| %>
-        <li class="list-group-item"><%= series.name%>
-          <%= form_tag("/episodes/create", :class => "inline-form right") do %>
-              <%= hidden_field_tag :remote_id, series.remote_id %>
-              <%= submit_tag "Get episodes", :class => "submit-link" %>
-          <%end%>
-        </li>
+        <tr>
+            <td>
+                <%= series.name%>
+            </td>
+            <td>
+                <%= form_tag("/episodes/create", :class => "inline-form right") do %>
+                <%= hidden_field_tag :remote_id, series.remote_id %>
+                <%= submit_tag "Add series to list", class: "btn btn-primary" %>
+                <%end%>
+            </td>
+            </td>
+        </tr>
     <% end %>
-  </ul>
+</table>

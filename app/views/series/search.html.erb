@@ -1,17 +1,16 @@
 <div class="page-header" xmlns="http://www.w3.org/1999/html">
-  <h3>Try the search box below to find a series</h3>
+    <h3>Try the search box below to find a series</h3>
 </div>
-
 <div>
-  <%= form_tag(series_index_path, method: "get", class: 'form-search') do %>
-      <%= label_tag :name, 'Look for a series by it\'s name' %><br />
-      <div class="input-group col-md-5">
-        <%= text_field_tag :search, nil, placeholder: 'Search...', class: "form-control" %>
-        <div class="input-group-btn">
-            <%= submit_tag "Search", name: nil, :class => "btn-primary btn" %>
+    <%= form_tag(series_index_path, method: "get", class: 'form-search') do %>
+        <%= label_tag :name, 'Look for a series by it\'s name' %><br />
+        <div class="input-group col-md-5">
+            <%= text_field_tag :search, nil, placeholder: 'Search...', class: "form-control" %>
+            <div class="input-group-btn">
+                <%= submit_tag "Search", name: nil, :class => "btn-primary btn" %>
+            </div>
         </div>
-      </div>
-  <% end %>
+    <% end %>
 </div>
 
 

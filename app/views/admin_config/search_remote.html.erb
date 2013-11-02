@@ -1,16 +1,17 @@
-<div class="jumbotron" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-  <h4>Look for a series on thetvdb.com</h4><br />
-
-  <%= form_tag("/admin_config/search_remote", method: "get", class: "form-search extra-padding-bottom", remote: true) do %>
-      <%= label_tag :name, "Look for a series by it\'s title" %><br />
-      <div class="input-group col-md-5">
-        <%= text_field_tag :name, nil, placeholder: "Search...", class: "form-control" %>
-        <div class="input-group-btn">
-          <%= submit_tag "Search", :class => "btn-primary btn" %>
+<div class="page-header">
+    <h3>Look for a series on thetvdb.com</h3>
+</div>
+<div>
+    <%= form_tag("/admin_config/search_remote", method: "get", class: "form-search extra-padding-bottom", remote: true) do %>
+        <%= label_tag :name, "Look for a series by it\'s title" %><br />
+        <div class="input-group col-md-5">
+            <%= text_field_tag :name, nil, placeholder: "Search...", class: "form-control" %>
+            <div class="input-group-btn">
+                <%= submit_tag "Search", :class => "btn-primary btn" %>
+            </div>
         </div>
-      </div>
-  <% end %>
-  </br>
-  <div class="js-search-results">
-  </div>
+    <% end %>
+    </br>
+    <div class="js-search-results">
+    </div>
 </div>
