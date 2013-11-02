@@ -1,6 +1,8 @@
-<div class='jumbotron'>
-  <h4>Try the search box below to find a series</h4><br />
+<div class="page-header" xmlns="http://www.w3.org/1999/html">
+  <h3>Try the search box below to find a series</h3>
+</div>
 
+<div>
   <%= form_tag(series_index_path, method: "get", class: 'form-search') do %>
       <%= label_tag :name, 'Look for a series by it\'s name' %><br />
       <div class="input-group col-md-5">
@@ -11,3 +13,5 @@
       </div>
   <% end %>
 </div>
+
+
