@@ -3,6 +3,7 @@ class EpisodesController < ApplicationController
   load_and_authorize_resource :only => [:create]
 
   def create
+    authorize! :manage, :all
     @ac = ApiConnector.new
     @series = Series.where(:remote_id => params[:remote_id]).first
     if @series.episodes.present?
