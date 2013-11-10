@@ -5,6 +5,9 @@
     <div class="panel-body">
         <table class='table table-striped'>
             <tbody>
+                <% if @series.empty? %>
+                    <tr><td>No series are present in the database</td></tr>
+                <% end %>
                 <% @series.each do |series| %>
                     <tr>
                         <td><%= truncate(series.name, length: 40) %></td>
