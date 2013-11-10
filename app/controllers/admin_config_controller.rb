@@ -15,6 +15,7 @@ class AdminConfigController < ApplicationController
 
   def search_remote
     authorize! :manage, :all
+    @series = []
 
     if params[:name].blank?
       flash.now[:alert] = "Why don't you try filling in the field?"
@@ -22,7 +23,7 @@ class AdminConfigController < ApplicationController
     else
       ac = ApiConnector.new
       remote_series = ac.get_series_from_remote(params[:name])
-      @series = []
+
       remote_series.each do |series|
         @series << Series.create(:name => series[:series_name], :overview => series[:series_overview], :remote_id => series[:series_id])
       end

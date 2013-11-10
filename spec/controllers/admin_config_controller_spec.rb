@@ -93,6 +93,10 @@ describe AdminConfigController do
 
         its(:response) { should render_template :search_remote }
 
+        it "should return html" do
+          response.content_type.should == Mime::HTML
+        end
+
         it 'displays a flash message' do
           flash.now[:alert].should eq("Why don't you try filling in the field?")
         end

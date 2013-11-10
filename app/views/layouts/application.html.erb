@@ -10,8 +10,9 @@
           <%= render 'layouts/header' %>
 
           <div class="container">
-          <%= render 'layouts/flash_messages' %>
-
+            <div class="flash-holder">
+                <%= render 'layouts/flash_messages' %>
+            </div>
           <%= yield %>
 
           </br>
