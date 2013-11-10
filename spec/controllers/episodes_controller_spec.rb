@@ -21,9 +21,9 @@ describe EpisodesController do
           login_admin
           @series = FactoryGirl.create(:series, :remote_id => 1212)
           @ac = ApiConnector.new
-          FakeWeb.register_uri(:get, "http://thetvdb.com/api/4F5EC797A9F93512/series/1212/all/en.zip", :body => File.open(Rails.root.join("spec/data/en.zip")))
+          FakeWeb.register_uri(:get, "http://thetvdb.com/api/4F5EC797A9F93512/series/1212/all/en.zip", :body => File.open(Rails.root.join("spec/data/en-stripped.zip")))
           post :create, :remote_id => @series.remote_id
-          @episodes = Episode.first(2)
+          @episodes = Episode.all
         end
 
         let(:first_episode) { @episodes.first }
@@ -36,7 +36,7 @@ describe EpisodesController do
         its(:name) { should == "This episode has no name" }
 
         it "should create all remotely found episodes" do
-          Episode.count.should == 148
+          Episode.count.should == 4
         end
 
         it "should set the series_ids to the remote_id of the series" do
@@ -52,11 +52,11 @@ describe EpisodesController do
 
         context "when the attributes are present" do
 
-          let(:second_episode) { @episodes[1] }
-          subject { second_episode }
-
-          its(:name) { should == "Original Pilot" }
+          let(:episode_with_attrs) { @episodes[3] }
+          subject { episode_with_attrs }
+          its(:name) { should == "Minstrel Krampus" }
           its(:series_id) { should == 1212 }
+          its(:season) { should == 9 }
         end
       end
     end

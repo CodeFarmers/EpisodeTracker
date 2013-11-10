@@ -4,6 +4,7 @@ describe Episode do
 
   it { should belong_to(:series) }
   it { should validate_presence_of(:name) }
+  it { should respond_to(:season) }
 
   before { @series = Series.new(:name => "Arrested Development", :remote_id => "123") }
 

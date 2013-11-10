@@ -160,7 +160,7 @@ describe ApiConnector do
   describe 'unzip zipfile' do
 
     before(:all) do
-      ziphandle = File.open("spec/data/en.zip")
+      ziphandle = File.open("spec/data/en-complete.zip")
       @files = @ac.unzip(ziphandle)
     end
 
@@ -185,7 +185,7 @@ describe ApiConnector do
 
     before(:all) do
       series = Series.create(name: "SomeSeries", remote_id: "71663")
-      ziphandle = File.open("spec/data/en.zip")
+      ziphandle = File.open("spec/data/en-stripped.zip")
       @ac.should_receive(:create_handle_for_zip).with(series.remote_id).and_return(ziphandle)
       @episodes = @ac.get_episodes(series.remote_id)
     end
@@ -214,6 +214,5 @@ describe ApiConnector do
       body = @ac.get_response_body_for("http://thetvdb.com/api/GetSeries.php?seriesname=qsdfqsdf")
       body.should include "<?xml version=\"1.0\" encoding=\"UTF-8\" ?"
     end
-
   end
 end

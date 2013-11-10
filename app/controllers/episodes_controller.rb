@@ -13,8 +13,9 @@ class EpisodesController < ApplicationController
       episodes.each do |episode|
         name = episode.elements["EpisodeName"].text
         overview = episode.elements["Overview"].text
+        season = episode.elements["SeasonNumber"].try(:text).to_i
         name.nil? ? name = "This episode has no name" : name
-        Episode.create!(:name => name, :overview => overview, :series_id => params[:remote_id])
+        Episode.create!(:name => name, :overview => overview, :series_id => params[:remote_id], :season => season)
       end
     end
     redirect_to series_episodes_path(@series)
