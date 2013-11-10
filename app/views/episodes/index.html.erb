@@ -1,17 +1,50 @@
 <div class='page-header'>
-  <h3>This is the episode list for <%= @series.name%></h3>
+  <h3>This is the episode list for <%= @series.name %></h3>
 </div>
 <h5><%= @series.overview %></h5>
-<div>
+
+<% unless @episodes[1].nil? || @episodes[2].nil? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Season 1</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @episodes[1].each do |episode| %>
+              <tr>
+                <td><%= episode.name %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
 
 
-  <%= will_paginate @episodes %>
-  <ul id="episodes">
-    <% @episodes.each do |episode| %>
-      <li>
-        <%= episode.name  %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Season 2</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @episodes[2].each do |episode| %>
+              <tr><td><%= episode.name %></td></tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+<% end %>

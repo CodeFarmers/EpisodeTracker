@@ -74,6 +74,7 @@ describe EpisodesController do
 
     before(:each) do
       @series = FactoryGirl.create(:series)
+      @episode1 = @series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
     end
 
     it "should not be rendered for an unauthenticated user" do
@@ -94,8 +95,9 @@ describe EpisodesController do
 
         let(:series) { FactoryGirl.create(:series) }
         before(:each) do
-          @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht")
-          @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht")
+          @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
+          @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 2)
+          @episode3 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 1)
           login_user
           get :index, :series_id => series
         end
@@ -107,37 +109,40 @@ describe EpisodesController do
           response.body.should have_content("This is the episode list for #{series.name}")
         end
 
-        it "should show the episodes list" do
-          response.body.should have_selector("ul#episodes li")
-        end
-
         it "should contain the name of the episodes" do
           response.body.should have_content(series.episodes.first.name)
           response.body.should have_content(series.episodes.second.name)
         end
+
+        it "should be grouped by season" do
+         @episodes = assigns(:episodes)
+         @episodes[1].should == [@episode1, @episode3]
+         @episodes[2].should == [@episode2]
+        end
       end
 
-      context "pagination"
 
-        let(:series) { FactoryGirl.create(:series) }
-
-        it "will not paginate when there are less than 10 episodes" do
-          9.times do |i|
-            series.episodes.create(name: "De aflevering#{i}", overview: "Het overzicht")
-          end
-          login_user
-          get :index, :series_id => series
-          response.body.should_not have_selector("div.pagination")
-        end
-
-        it "will paginate when there are more than 10 episodes" do
-          11.times do |i|
-            series.episodes.create(name: "De aflevering#{i}", overview: "Het overzicht")
-          end
-          login_user
-          get :index, :series_id => series
-          response.body.should have_selector("div.pagination")
-        end
+      #context "pagination"
+      #
+      #  let(:series) { FactoryGirl.create(:series) }
+      #
+      #  it "will not paginate when there are less than 10 episodes" do
+      #    9.times do |i|
+      #      series.episodes.create(name: "De aflevering#{i}", overview: "Het overzicht")
+      #    end
+      #    login_user
+      #    get :index, :series_id => series
+      #    response.body.should_not have_selector("div.pagination")
+      #  end
+      #
+      #  it "will paginate when there are more than 10 episodes" do
+      #    11.times do |i|
+      #      series.episodes.create(name: "De aflevering#{i}", overview: "Het overzicht")
+      #    end
+      #    login_user
+      #    get :index, :series_id => series
+      #    response.body.should have_selector("div.pagination")
+      #  end
     end
   end
 end

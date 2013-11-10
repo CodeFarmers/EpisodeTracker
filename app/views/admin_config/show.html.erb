@@ -2,20 +2,24 @@
   <h3>Admin rights are the best!</h3>
 </div>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Searching for series</h3>
-            </div>
-            <div class="panel-body">
-            <p>
-              From this page you'll be able to manage the available series and copy over the episodes for a series.
-            </p>
-            <p>
-              Because copying over all the episodes from thetvdb.com might take a while, we've opted to split the process into two parts.
-              First you add a series to the available series list on bottom of the screen by clicking the link below and searching for a series, then you copy over the episodes by clicking the 'Get episodes' button.
-            </p>
-            <%= link_to "Copy over a series from thetvdb.com", "/admin_config/search" %>
-            </div>
-          </div>
-    <%= render :partial => "shared/series_block" %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Searching for series</h3>
+  </div>
+  <div class="panel-body">
+    <p>
+      From this page you'll be able to manage the available series and copy over the episodes for a series.
+    </p>
+
+    <p>
+      Because copying over all the episodes from thetvdb.com might take a while, we've opted to split the process into
+      two parts.
+      First you add a series to the available series list on bottom of the screen by clicking the link below and
+      searching for a series, then you copy over the episodes by clicking the 'Get episodes' button.
+    </p>
+    <%= link_to "Copy over a series from thetvdb.com", "/admin_config/search" %>
+  </div>
+</div>
+
+<%= render :partial => "shared/series_block" %>
 
