@@ -2,5 +2,6 @@ if ((<%= @series == [] %>) == true) {
     $('div.flash-holder').html('<%= escape_javascript(render('layouts/flash_messages')) %>');
 }
 else {
+    $('div.flash-holder').html('');
     $('.js-search-results').html('<%= escape_javascript(render('series/select_for_show')) %>');
 }

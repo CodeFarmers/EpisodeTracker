@@ -19,6 +19,7 @@ group :development, :test do
   gem 'rubyzip'
   gem 'multi_json', '1.8.2'
   gem 'capybara-webkit'
+  gem 'thin'
 end
 
 group :test do
