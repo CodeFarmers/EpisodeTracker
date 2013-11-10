@@ -1,5 +1,6 @@
 class AdminConfigController < ApplicationController
   before_filter :authenticate_user!
+  rescue_from ActionController::RoutingError, :with => :not_found
   respond_to :json, :only => [ :search_remote ]
 
   def show
@@ -29,5 +30,11 @@ class AdminConfigController < ApplicationController
       end
     @series
     end
+  end
+
+  private
+
+  def not_found
+    render :partial => "shared/not_found"
   end
 end

@@ -102,6 +102,19 @@ describe AdminConfigController do
         end
       end
 
+      context 'with a name that does not return results' do
+
+        before(:each) do
+          page = stub(:code=>404)
+          ApiConnector.any_instance.stub(:get_series_from_remote)
+          .and_raise(ActionController::RoutingError.new(page))
+        end
+
+        it "should render a 404" do
+          xhr :get, :search_remote, :name => "aviator"
+          response.body.should include "Your search did not return any results"
+        end
+      end
       context 'with a valid name' do
 
         context 'when only one result is found remotely' do
