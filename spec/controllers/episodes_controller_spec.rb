@@ -115,7 +115,7 @@ describe EpisodesController do
         end
 
         it "should be grouped by season" do
-         @episodes = assigns(:episodes)
+         @episodes = assigns(:episodes_grouped_by_season)
          @episodes[1].should == [@episode1, @episode3]
          @episodes[2].should == [@episode2]
         end

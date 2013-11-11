@@ -2,49 +2,30 @@
   <h3>This is the episode list for <%= @series.name %></h3>
 </div>
 <h5><%= @series.overview %></h5>
+</br>
 
-<% unless @episodes[1].nil? || @episodes[2].nil? %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Season 1</h3>
-      </div>
-      <div class="panel-body">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @episodes[1].each do |episode| %>
+<% unless @episodes_grouped_by_season[1].nil? || @episodes_grouped_by_season[2].nil? %>
+    <% @episodes_grouped_by_season.each do |season, episodes| %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Season <%= season %></h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
+              <thead>
               <tr>
-                <td><%= episode.name %></td>
+                <th>Name</th>
               </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Season 2</h3>
-      </div>
-      <div class="panel-body">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @episodes[2].each do |episode| %>
-              <tr><td><%= episode.name %></td></tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+              </thead>
+              <tbody>
+              <% episodes.each do |episode| %>
+                  <tr>
+                    <td><%= episode.name %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    <% end %>
 <% end %>

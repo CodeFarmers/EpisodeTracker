@@ -24,6 +24,6 @@ class EpisodesController < ApplicationController
   def index
     @series = Series.find(params[:series_id])
     #@episodes = @series.episodes.paginate(:page => params[:page], :per_page => 10)
-    @episodes = @series.episodes.group_by(&:season)
+    @episodes_grouped_by_season = @series.episodes.group_by(&:season)
   end
 end
