@@ -95,8 +95,8 @@ describe EpisodesController do
 
         let(:series) { FactoryGirl.create(:series) }
         before(:each) do
-          @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
           @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 2)
+          @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
           @episode3 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 1)
           login_user
           get :index, :series_id => series
@@ -114,10 +114,10 @@ describe EpisodesController do
           response.body.should have_content(series.episodes.second.name)
         end
 
-        it "should be grouped by season" do
+        it "should be grouped by season and sorted" do
          @episodes = assigns(:episodes_grouped_by_season)
-         @episodes[1].should == [@episode1, @episode3]
-         @episodes[2].should == [@episode2]
+         @episodes[0].should == [1, [@episode1, @episode3] ]
+         @episodes[1].should == [2, [@episode2] ]
         end
       end
 
