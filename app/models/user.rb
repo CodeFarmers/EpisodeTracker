@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  has_many :user_episodes
+  has_many :episodes, through: :user_episodes
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable

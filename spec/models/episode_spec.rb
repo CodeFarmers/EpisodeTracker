@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Episode do
 
   it { should belong_to(:series) }
+  it { should have_many(:users).through(:user_episodes) }
   it { should validate_presence_of(:name) }
   it { should respond_to(:season) }
 
