@@ -13,6 +13,8 @@ EpisodeTracker::Application.routes.draw do
   devise_for :users
   get "pages/home"
 
+  resources :user_episodes
+
   resources :series do
     resources :episodes
   end
