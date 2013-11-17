@@ -97,8 +97,10 @@ describe EpisodesController do
         before(:each) do
           @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 2)
           @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
-          @episode3 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 1)
+          @episode3 = series.episodes.create(name: "De aflevering3", overview: "Het overzicht", season: 1)
           login_user
+          UserEpisode.create(user_id: @current_user.id, episode_id: @episode1.id)
+          UserEpisode.create(user_id: @current_user.id, episode_id: @episode3.id)
           get :index, :series_id => series
         end
 
@@ -118,6 +120,13 @@ describe EpisodesController do
          @episodes = assigns(:episodes_grouped_by_season)
          @episodes[0].should == [1, [@episode1, @episode3] ]
          @episodes[1].should == [2, [@episode2] ]
+        end
+
+        it "should have a checkbox state for each episode" do
+          checkbox_states = assigns(:checkbox_states)
+          checkbox_states[@episode1.id].should be_true
+          checkbox_states[@episode2.id].should be_false
+          checkbox_states[@episode3.id].should be_true
         end
       end
 
