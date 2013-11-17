@@ -19,6 +19,12 @@
           <% episodes.each do |episode| %>
               <tr>
                 <td><%= episode.name %></td>
+                <td>
+                  <%= form_tag({ controller: "user_episodes", action: "create" }, method: "post", class: "js-self-submitting", remote: true) do %>
+                    <%= check_box_tag(:episode, episode.id, false, { :class => "submittable"} ) %>
+                    <%= hidden_field_tag(:episode_id, episode.id) %>
+                  <% end %>
+                </td>
               </tr>
           <% end %>
           </tbody>
