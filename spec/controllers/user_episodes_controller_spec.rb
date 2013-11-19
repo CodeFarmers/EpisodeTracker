@@ -23,8 +23,8 @@ describe UserEpisodesController do
 
       it "should create the record" do
         lambda do
-          xhr :post, :create, user_id: user_id,
-                        episode_id: episode_id
+          xhr :post, :create, user_id: 2,
+                        episode_id: 3
         end.should change(UserEpisode, :count).by(1)
       end
 
@@ -34,7 +34,7 @@ describe UserEpisodesController do
         response.content_type.should == Mime::JS
       end
 
-      it "should pass on the user_episode" do
+      it "should assign the user_episode" do
         user_episode = assigns(:user_episode)
         user_episode.user_id.should eq(1)
         user_episode.episode_id.should eq(2)

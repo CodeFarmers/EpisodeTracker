@@ -25,6 +25,7 @@ class EpisodesController < ApplicationController
     @series = Series.find(params[:series_id])
     #@episodes = @series.episodes.paginate(:page => params[:page], :per_page => 10)
     @episodes_grouped_by_season = @series.episodes.group_by(&:season).sort
+
     episodes =  @series.episodes.includes(:user_episodes)
     @checkbox_states = {}
     episodes.each do | episode |
