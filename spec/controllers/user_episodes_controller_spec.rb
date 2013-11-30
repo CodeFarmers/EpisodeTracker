@@ -5,27 +5,22 @@ describe UserEpisodesController do
   describe "post CREATE" do
 
     context "when not signed in" do
-
       before { post :create }
-
       it { should redirect_to new_user_session_path }
     end
 
     context "when signed in" do
 
-      let(:user_id) { 1 }
-      let(:episode_id) { 2 }
+      let(:episode) { FactoryGirl.create(:episode) }
       before do
         login_user
-        xhr :post, :create, user_id: user_id, episode_id: episode_id
+        xhr :post, :create, episode_id: episode.id
       end
 
-
       it "should create the record" do
-        lambda do
-          xhr :post, :create, user_id: 2,
-                        episode_id: 3
-        end.should change(UserEpisode, :count).by(1)
+        user_episode = UserEpisode.where(user_id: @current_user.id, episode_id: episode.id).first
+        user_episode.should be_instance_of(UserEpisode)
+        user_episode.should_not be_nil
       end
 
       its(:response) { should be_success }
@@ -36,8 +31,31 @@ describe UserEpisodesController do
 
       it "should assign the user_episode" do
         user_episode = assigns(:user_episode)
-        user_episode.user_id.should eq(1)
-        user_episode.episode_id.should eq(2)
+        user_episode.user_id.should eq(@current_user.id)
+        user_episode.episode_id.should eq(episode.id)
+      end
+
+    end
+  end
+
+  describe "delete DESTROY" do
+
+    context "when not signed in" do
+      before { delete :destroy, id: 1 }
+      it { should redirect_to new_user_session_path }
+    end
+
+    context "when signed in" do
+
+      before do
+        login_user
+        @user_episode = UserEpisode.create(user_id: @current_user.id , episode_id: 4)
+      end
+
+      it "should destroy the correct episode" do
+        expect do
+          xhr :delete, :destroy, id: @user_episode.episode_id
+        end.to change(UserEpisode, :count).by(-1)
       end
     end
   end

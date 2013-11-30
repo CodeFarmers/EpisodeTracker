@@ -27,10 +27,11 @@ class EpisodesController < ApplicationController
     @episodes_grouped_by_season = @series.episodes.group_by(&:season).sort
 
     episodes =  @series.episodes.includes(:user_episodes)
-    @checkbox_states = {}
+
+    @user_episodes = {}
     episodes.each do | episode |
-      @checkbox_states.merge!({ episode.id => episode.user_episodes.present? })
+      @user_episodes.merge!({ episode.id => episode.user_episodes.first })
     end
-    @checkbox_states
+    @user_episodes
   end
 end

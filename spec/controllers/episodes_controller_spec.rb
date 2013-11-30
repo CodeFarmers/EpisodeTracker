@@ -122,11 +122,11 @@ describe EpisodesController do
          @episodes[1].should == [2, [@episode2] ]
         end
 
-        it "should have a checkbox state for each episode" do
-          checkbox_states = assigns(:checkbox_states)
-          checkbox_states[@episode1.id].should be_true
-          checkbox_states[@episode2.id].should be_false
-          checkbox_states[@episode3.id].should be_true
+        it "should have a user episode for each episode" do
+          user_episodes = assigns(:user_episodes)
+          user_episodes[@episode1.id].should eq(@episode1.user_episodes.first)
+          user_episodes[@episode2.id].should eq(@episode2.user_episodes.first)
+          user_episodes[@episode3.id].should eq(@episode3.user_episodes.first)
         end
       end
 
