@@ -14,7 +14,7 @@ describe UserEpisodesController do
       let(:episode) { FactoryGirl.create(:episode) }
       before do
         login_user
-        xhr :post, :create, episode_id: episode.id
+        xhr :post, :create, episode: episode.id
       end
 
       it "should create the record" do
@@ -54,7 +54,7 @@ describe UserEpisodesController do
 
       it "should destroy the correct episode" do
         expect do
-          xhr :delete, :destroy, id: @user_episode.episode_id
+          xhr :delete, :destroy, id: @user_episode.id
         end.to change(UserEpisode, :count).by(-1)
       end
     end
