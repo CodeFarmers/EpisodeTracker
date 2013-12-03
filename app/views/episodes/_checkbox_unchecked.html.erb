@@ -1,4 +1,3 @@
-<%= form_tag({ controller: "user_episodes", action: "create" }, method: "post", remote: true) do %>
+<%= form_for(:user_episode, url: user_episodes_path, action: "create", method: "post", remote: true ) do |f| %>
     <%= check_box_tag(:episode, episode_id, false, { :class => "submittable"} ) %>
-    <%= hidden_field_tag(:episode_id, episode_id) %>
 <% end %>
