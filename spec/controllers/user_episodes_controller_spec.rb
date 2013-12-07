@@ -47,15 +47,23 @@ describe UserEpisodesController do
 
     context "when signed in" do
 
+      let(:other_user) { FactoryGirl.create(:user) }
+      let(:user_episode_for_other_user) { FactoryGirl.create(:user_episode, user: other_user )}
       before do
         login_user
         @user_episode = UserEpisode.create(user_id: @current_user.id , episode_id: 4)
       end
 
-      it "should destroy the correct episode" do
+      it "should destroy the correct userepisode" do
         expect do
           xhr :delete, :destroy, id: @user_episode.id
         end.to change(UserEpisode, :count).by(-1)
+      end
+
+      it "should render an error if the record does not belong to the user" do
+        expect do
+          xhr :delete, :destroy, id: user_episode_for_other_user.id
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end

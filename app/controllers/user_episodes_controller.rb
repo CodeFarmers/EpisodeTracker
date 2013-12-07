@@ -7,10 +7,17 @@ class UserEpisodesController < ApplicationController
   end
 
   def destroy
-    #destroyed = UserEpisode.where(user_id: current_user.id, episode_id: params[:id]).destroy_all
-    #@user_episode = destroyed.first
 
-    ##If record belongs to user checken!!
-    @user_episode = UserEpisode.destroy(params[:id])
+    if belongs_to_current_user(params[:id])
+      @user_episode = UserEpisode.destroy(params[:id])
+    else
+      not_found
+    end
+  end
+
+  private
+
+  def belongs_to_current_user(id)
+    UserEpisode.find(id).user_id == current_user.id
   end
 end
