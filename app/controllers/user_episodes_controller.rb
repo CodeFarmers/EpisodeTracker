@@ -7,7 +7,6 @@ class UserEpisodesController < ApplicationController
   end
 
   def destroy
-
     if belongs_to_current_user(params[:id])
       @user_episode = UserEpisode.destroy(params[:id])
     else

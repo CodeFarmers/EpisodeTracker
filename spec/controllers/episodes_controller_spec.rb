@@ -94,6 +94,7 @@ describe EpisodesController do
 
 
         let(:series) { FactoryGirl.create(:series) }
+        let(:other_user) { FactoryGirl.create(:user) }
         before(:each) do
           @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 2)
           @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
@@ -101,6 +102,7 @@ describe EpisodesController do
           login_user
           UserEpisode.create(user_id: @current_user.id, episode_id: @episode1.id)
           UserEpisode.create(user_id: @current_user.id, episode_id: @episode3.id)
+          UserEpisode.create(user_id: other_user.id, episode_id: @episode2.id)
           get :index, :series_id => series
         end
 
@@ -122,11 +124,16 @@ describe EpisodesController do
          @episodes[1].should == [2, [@episode2] ]
         end
 
-        it "should have a user episode for each episode" do
+        it "should assign the user_episodes" do
           user_episodes = assigns(:user_episodes)
           user_episodes[@episode1.id].should eq(@episode1.user_episodes.first)
           user_episodes[@episode2.id].should eq(@episode2.user_episodes.first)
           user_episodes[@episode3.id].should eq(@episode3.user_episodes.first)
+        end
+
+        it "should only assign the user_episodes for the current user" do
+          user_episodes = assigns(:user_episodes)
+          user_episodes[@episode2.id].should be_nil
         end
       end
 

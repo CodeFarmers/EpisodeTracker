@@ -21,7 +21,7 @@
               <tr>
                 <td><%= episode.name %></td>
                 <td>
-                  <% if episode.has_been_watched_by?(current_user) %>
+                  <% if @user_episodes[episode.id].present? %>
                       <%= render partial: "checkbox_checked", locals: {user_episode: @user_episodes[episode.id], episode_id: episode.id} %>
                   <% else %>
                       <%= render partial: "checkbox_unchecked", locals: {episode_id: episode.id} %>

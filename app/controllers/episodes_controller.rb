@@ -30,8 +30,12 @@ class EpisodesController < ApplicationController
 
     @user_episodes = {}
     episodes.each do | episode |
-      @user_episodes.merge!({ episode.id => episode.user_episodes.first })
+      user_episode = episode.user_episodes.first
+      if user_episode && user_episode.user_id == current_user.id
+        @user_episodes.merge!({ episode.id => episode.user_episodes.first })
+      end
     end
     @user_episodes
+
   end
 end

@@ -2,6 +2,7 @@ $('form').bind("ajax:success", function(xhr, data, status) {
     $("input[value=<%= @user_episode.episode_id %>]").parents("form:first").parent()
             .html('<%= escape_javascript(render(partial: 'episodes/checkbox_unchecked', locals: {episode_id: @user_episode.episode_id})) %>');
 
+    alert(this);
     $("input[value=<%= @user_episode.episode_id %>]").change(function(){
         $(this).parents('form:first').submit();
     });
