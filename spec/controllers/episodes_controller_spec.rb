@@ -127,7 +127,6 @@ describe EpisodesController do
         it "should assign the user_episodes" do
           user_episodes = assigns(:user_episodes)
           user_episodes[@episode1.id].should eq(@episode1.user_episodes.first)
-          user_episodes[@episode2.id].should eq(@episode2.user_episodes.first)
           user_episodes[@episode3.id].should eq(@episode3.user_episodes.first)
         end
 

@@ -4,6 +4,5 @@ class Episode < ActiveRecord::Base
   has_many :users, through: :user_episodes
   validates_presence_of :name
   attr_accessible :name, :overview, :series_id, :season
-
 end
 

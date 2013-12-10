@@ -6,7 +6,6 @@ describe Episode do
   it { should have_many(:users).through(:user_episodes) }
   it { should validate_presence_of(:name) }
   it { should respond_to(:season) }
-  it { should respond_to(:has_been_watched_by?) }
 
   before { @series = Series.new(:name => "Arrested Development", :remote_id => "123") }
 
