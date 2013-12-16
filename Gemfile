@@ -7,7 +7,7 @@ gem 'rails', '3.2.3'
 
 gem 'pg'
 gem 'jquery-rails'
-gem 'bootstrap-sass'
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails', :github => 'anjlab/bootstrap-rails'
 gem 'therubyracer'
 gem 'devise'
 gem 'will_paginate', '> 3.0'

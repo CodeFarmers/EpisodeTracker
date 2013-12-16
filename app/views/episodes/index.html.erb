@@ -4,34 +4,42 @@
 <h5><%= @series.overview %></h5>
 </br>
 
-<% @episodes_grouped_by_season.each do |season, episodes| %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Season <%= season %></h3>
-      </div>
-      <div class="panel-body">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Episode title</th>
-            <th class="col-sm-2">Watched this episode?</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% episodes.each do |episode| %>
-              <tr>
-                <td><%= episode.name %></td>
-                <td>
-                  <% if @user_episodes[episode.id].present? %>
-                      <%= render partial: "checkbox_checked", locals: {user_episode: @user_episodes[episode.id], episode_id: episode.id} %>
-                  <% else %>
-                      <%= render partial: "checkbox_unchecked", locals: {episode_id: episode.id} %>
+<div class="panel-group" id="accordion">
+    <% @episodes_grouped_by_season.each do |season, episodes| %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#season<%= season %>">
+                Season <%= season %>
+              </a>
+            </h3>
+          </div>
+          <div id="season<%= season %>" class="panel-collapse collapse">
+              <div class="panel-body">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>Episode title</th>
+                    <th class="col-sm-2">Watched this episode?</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% episodes.each do |episode| %>
+                      <tr>
+                        <td><%= episode.name %></td>
+                        <td>
+                          <% if @user_episodes[episode.id].present? %>
+                              <%= render partial: "checkbox_checked", locals: {user_episode: @user_episodes[episode.id], episode_id: episode.id} %>
+                          <% else %>
+                              <%= render partial: "checkbox_unchecked", locals: {episode_id: episode.id} %>
+                          <% end %>
+                        </td>
+                      </tr>
                   <% end %>
-                </td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-<% end %>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+        </div>
+    <% end %>
+</div>
