@@ -3,7 +3,7 @@
 </div>
 <div>
     <%= form_tag("/admin_config/search_remote", method: "get", class: "form-search extra-padding-bottom", remote: true) do %>
-        <%= label_tag :name, "Look for a series by it\'s title" %><br />
+        <%= label_tag :name, "Look for a series by its name" %><br />
         <div class="input-group col-md-5">
             <%= text_field_tag :name, nil, placeholder: "Search...", class: "form-control" %>
             <div class="input-group-btn">
