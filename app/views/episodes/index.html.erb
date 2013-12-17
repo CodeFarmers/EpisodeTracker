@@ -10,7 +10,11 @@
           <div class="panel-heading">
             <h3 class="panel-title">
               <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#season<%= season %>">
-                Season <%= season %>
+                <% if season == 0 %>
+                    Episodes without season information
+                <% else %>
+                    Season <%= season %>
+              <% end %>
               </a>
             </h3>
           </div>
