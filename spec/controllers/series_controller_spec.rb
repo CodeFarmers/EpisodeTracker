@@ -34,15 +34,20 @@ describe SeriesController do
     let(:series) { FactoryGirl.create(:series) }
     let!(:episode) { FactoryGirl.create(:episode, name: 'episode', series_id: series.remote_id) }
 
+    it "should return JS" do
+      xhr :get, :index, :search => "the simpsons"
+      response.content_type[0..14].should == Mime::JS
+    end
+
     it "should query the model for the needed results" do
       login_user
       Series.should_receive(:search).with(series.name).and_return([series])
-      get :index, :search => series.name
+      xhr :get, :index, :search => series.name
     end
 
     it "should show the returned results" do
       login_user
-      get :index, :search => series.name
+      xhr :get, :index, :search => series.name
       response.body.should have_content(series.name)
     end
   end

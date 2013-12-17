@@ -2,7 +2,7 @@
     <h3>Try the search box below to find a series</h3>
 </div>
 <div>
-    <%= form_tag(series_index_path, method: "get", class: 'form-search') do %>
+    <%= form_tag(series_index_path, method: "get", class: 'form-search', remote: true) do %>
         <%= label_tag :name, 'Look for a series by it\'s name' %><br />
         <div class="input-group col-md-5">
             <%= text_field_tag :search, nil, placeholder: 'Search...', class: "form-control" %>
@@ -11,6 +11,9 @@
             </div>
         </div>
     <% end %>
+  </br>
+  <div class="js-search-results">
+  </div>
 </div>
 
 
