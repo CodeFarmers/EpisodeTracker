@@ -10,7 +10,7 @@ class UserEpisodesController < ApplicationController
     if belongs_to_current_user(params[:id])
       @user_episode = UserEpisode.destroy(params[:id])
     else
-      not_found
+      raise ActionController::RoutingError.new('Forbidden')
     end
   end
 

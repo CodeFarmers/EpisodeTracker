@@ -31,10 +31,4 @@ class AdminConfigController < ApplicationController
     @series
     end
   end
-
-  private
-
-  def not_found
-    render :partial => "shared/not_found"
-  end
 end
