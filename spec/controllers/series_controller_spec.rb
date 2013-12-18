@@ -50,5 +50,11 @@ describe SeriesController do
       xhr :get, :index, :search => series.name
       response.body.should have_content(series.name)
     end
+
+    it "should render the 'not found' partial when no series are returned" do
+      login_user
+      xhr :get, :index, :search => "qmsldkf"
+      response.body.should include "Your search did not return any results"
+    end
   end
 end

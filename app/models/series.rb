@@ -10,7 +10,12 @@ class Series < ActiveRecord::Base
       #ap Series.all
       #ap Episode.all
       #ap Series.joins(:episodes).uniq.where("series.name like ?", "%" + search + "%")
-      Series.joins(:episodes).uniq.where("series.name ilike ?", "%" + search + "%")
+      series = Series.joins(:episodes).uniq.where("series.name ilike ?", "%" + search + "%")
+      if series.any?
+        series
+      else
+        raise ActionController::RoutingError.new('Series not found')
+      end
     else
       Series.joins(:episodes).uniq
     end

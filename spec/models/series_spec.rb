@@ -62,5 +62,9 @@ describe Series do
     it "should only return each series one time" do
       Series.search("The Simpsons").length.should eq(1)
     end
+
+    it "should raise error when no series are found" do
+      expect { Series.search("qsdfqf") }.to raise_error(ActionController::RoutingError)
+    end
   end
 end
