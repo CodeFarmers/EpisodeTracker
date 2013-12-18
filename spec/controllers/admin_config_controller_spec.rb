@@ -5,16 +5,7 @@ describe AdminConfigController do
 
   describe "GET 'show'" do
 
-    context "without a signed in user" do
-
-      before { get :show }
-
-      its(:response) { should be_redirect }
-
-      it "should redirect to the sign in path" do
-        response.should redirect_to "/users/sign_in"
-      end
-    end
+    it_behaves_like "a get action", :show, {}
 
     context "with an admin" do
 
@@ -40,15 +31,8 @@ describe AdminConfigController do
   end
 
   describe "GET 'search'" do
-    context "without a signed in user" do
 
-      before { get :search }
-
-      it "should redirect to the sign in path" do
-        response.should redirect_to "/users/sign_in"
-      end
-    end
-  end
+    it_behaves_like "a get action", :search, {}
 
     context "with an admin" do
 
@@ -61,13 +45,14 @@ describe AdminConfigController do
       its(:response) { should render_template :search }
     end
 
-  context "with a user" do
-    before(:each) do
-      login_user
-    end
+    context "with a user" do
+      before(:each) do
+        login_user
+      end
 
-    it "should raise an access denied error" do
-      expect { get :search }.to raise_error(CanCan::AccessDenied)
+      it "should raise an access denied error" do
+        expect { get :search }.to raise_error(CanCan::AccessDenied)
+      end
     end
   end
 

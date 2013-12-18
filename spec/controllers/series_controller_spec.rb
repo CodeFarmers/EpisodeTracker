@@ -5,15 +5,12 @@ describe SeriesController do
 
   describe "GET 'search'" do
 
+    it_behaves_like "a get action", :search, {}
+
     it "should work for logged in users" do
       login_user
       get :search
       response.should render_template "series/search"
-    end
-
-    it "should redirect to the sign in page if not logged in" do
-      get :search
-      response.should redirect_to new_user_session_path
     end
 
     it "should render the title" do
@@ -30,6 +27,8 @@ describe SeriesController do
   end
 
   describe "GET index" do
+
+    it_behaves_like "a get action", :index, {}
 
     let(:series) { FactoryGirl.create(:series) }
     let!(:episode) { FactoryGirl.create(:episode, name: 'episode', series_id: series.remote_id) }

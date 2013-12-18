@@ -72,14 +72,11 @@ describe EpisodesController do
 
   describe "GET 'index'" do
 
+    it_behaves_like "a get action", :index, {params: {series_id: 1}}
+
     before(:each) do
       @series = FactoryGirl.create(:series)
       @episode1 = @series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
-    end
-
-    it "should not be rendered for an unauthenticated user" do
-      get :index, :series_id => @series
-      response.should redirect_to new_user_session_path
     end
 
     context "for an authenticated user" do
