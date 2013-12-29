@@ -5,7 +5,7 @@ describe AdminConfigController do
 
   describe "GET 'show'" do
 
-    it_behaves_like "a get action", :show, {}
+    it_behaves_like "a get action", :show
 
     context "with an admin" do
 
@@ -32,7 +32,7 @@ describe AdminConfigController do
 
   describe "GET 'search'" do
 
-    it_behaves_like "a get action", :search, {}
+    it_behaves_like "a get action", :search
 
     context "with an admin" do
 

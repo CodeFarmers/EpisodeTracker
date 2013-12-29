@@ -5,7 +5,7 @@ describe SeriesController do
 
   describe "GET 'search'" do
 
-    it_behaves_like "a get action", :search, {}
+    it_behaves_like "a get action", :search
 
     it "should work for logged in users" do
       login_user
@@ -28,7 +28,7 @@ describe SeriesController do
 
   describe "GET index" do
 
-    it_behaves_like "a get action", :index, {}
+    it_behaves_like "a get action", :index
 
     let(:series) { FactoryGirl.create(:series) }
     let!(:episode) { FactoryGirl.create(:episode, name: 'episode', series_id: series.remote_id) }
