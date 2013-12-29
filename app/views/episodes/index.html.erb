@@ -23,6 +23,7 @@
                 <table class="table table-striped">
                   <thead>
                   <tr>
+                    <th>Air date</th>
                     <th>Episode title</th>
                     <th class="col-sm-2">Watched this episode?</th>
                   </tr>
@@ -30,6 +31,7 @@
                   <tbody>
                   <% episodes.each do |episode| %>
                       <tr>
+                        <td><%= episode.air_date %></td>
                         <td><%= episode.name %></td>
                         <td>
                           <% if @user_episodes[episode.id].present? %>
