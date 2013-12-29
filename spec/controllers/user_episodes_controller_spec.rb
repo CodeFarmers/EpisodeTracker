@@ -2,12 +2,9 @@ require "spec_helper"
 
 describe UserEpisodesController do
 
-  describe "post CREATE" do
+  describe "'POST' CREATE" do
 
-    context "when not signed in" do
-      before { post :create }
-      it { should redirect_to new_user_session_path }
-    end
+    it_behaves_like "authentication required", :create, method: "POST"
 
     context "when signed in" do
 
@@ -40,10 +37,7 @@ describe UserEpisodesController do
 
   describe "delete DESTROY" do
 
-    context "when not signed in" do
-      before { delete :destroy, id: 1 }
-      it { should redirect_to new_user_session_path }
-    end
+    it_behaves_like "authentication required", :destroy, {params: {id: 1}, method: "DELETE"}
 
     context "when signed in" do
 

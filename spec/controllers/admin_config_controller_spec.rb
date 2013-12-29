@@ -5,7 +5,7 @@ describe AdminConfigController do
 
   describe "GET 'show'" do
 
-    it_behaves_like "a get action", :show
+    it_behaves_like "authentication required", :show, method: "GET"
 
     context "with an admin" do
 
@@ -32,7 +32,7 @@ describe AdminConfigController do
 
   describe "GET 'search'" do
 
-    it_behaves_like "a get action", :search
+    it_behaves_like "authentication required", :search, method: "GET"
 
     context "with an admin" do
 
@@ -56,7 +56,9 @@ describe AdminConfigController do
     end
   end
 
-  describe "GET 'search_remote'" do
+  describe "POST 'search_remote'" do
+
+    it_behaves_like "authentication required", :search_remote, method: "POST"
 
     context 'as a user without admin rights' do
 

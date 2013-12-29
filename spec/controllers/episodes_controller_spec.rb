@@ -5,6 +5,8 @@ describe EpisodesController do
 
   describe "POST 'create'" do
 
+    it_behaves_like "authentication required", :create, method: "POST"
+
     context "for an authenticated person" do
 
       context "who is a user" do
@@ -60,19 +62,11 @@ describe EpisodesController do
         end
       end
     end
-
-    context "for a non-authenticated user" do
-
-      it "should redirect to the sign in page" do
-        post :create, :remote_id => 0
-        response.should redirect_to "/users/sign_in"
-      end
-    end
   end
 
   describe "GET 'index'" do
 
-    it_behaves_like "a get action", :index, {params: {series_id: 1}}
+    it_behaves_like "authentication required", :index, {params: {series_id: 1}, method: "GET"}
 
     before(:each) do
       @series = FactoryGirl.create(:series)
