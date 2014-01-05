@@ -8,6 +8,7 @@ describe Series do
   it { should respond_to(:name) }
   it { should respond_to(:remote_id) }
   it { should respond_to(:overview) }
+  it { should respond_to(:last_remote_update) }
   it { should have_many(:episodes) }
 
   it "should be able to get saved" do
