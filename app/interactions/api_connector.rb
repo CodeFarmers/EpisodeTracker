@@ -34,7 +34,7 @@ class ApiConnector
       id = series.elements["seriesid"].text
       name = series.elements["SeriesName"].text
       overview = series.elements["Overview"].try(:text)
-      series_list << {:series_id => id, :series_name => name, :series_overview => overview}
+      series_list << { series_id: id, series_name: name, series_overview: overview, last_remote_update: set_previous_time }
     end
     series_list
   end

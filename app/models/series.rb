@@ -2,8 +2,7 @@ class Series < ActiveRecord::Base
 
   has_many :episodes, :dependent => :destroy, :primary_key=> "remote_id"
 
-  attr_accessible :name, :overview, :remote_id
-  attr_accessor :last_remote_update
+  attr_accessible :name, :overview, :remote_id, :last_remote_update
   validates :name, presence: true, uniqueness: true
 
   def self.search(search)

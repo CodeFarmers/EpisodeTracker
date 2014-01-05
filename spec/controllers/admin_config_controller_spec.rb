@@ -108,7 +108,7 @@ describe AdminConfigController do
 
           before(:each) do
             ApiConnector.any_instance.stub(:get_series_from_remote)
-            .and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview" }] )
+            .and_return( [{ series_id: "555551", series_name: "The Simpsons", series_overview: "The overview", last_remote_update: "1362939962" }] )
 
             xhr :get, :search_remote, :name => "the simpsons"
           end
@@ -133,7 +133,7 @@ describe AdminConfigController do
         context 'when more than one result is found remotely' do
 
           before(:each) do
-            ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview"}, { :series_id => "555552", :series_name => "Jessica Simpson's The Price of Beauty" }] )
+            ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview", last_remote_update: "1362939962"}, { :series_id => "555552", :series_name => "Jessica Simpson's The Price of Beauty", last_remote_update: "1362939962" }] )
             post :search_remote, :name => "the simpsons"
           end
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Series do
 
-  let(:series) { Series.new(:name => "Arrested Development", :remote_id => "123") }
+  let(:series) { Series.new(:name => "Arrested Development", :remote_id => "123", last_remote_update: "1362939962") }
   subject { series }
 
   it { should respond_to(:name) }

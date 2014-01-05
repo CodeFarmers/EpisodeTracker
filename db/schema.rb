@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20140105093429) do
     t.integer  "remote_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
-    t.date     "last_remote_update"
+    t.string   "last_remote_update", :null => false
   end
 
   create_table "user_episodes", :force => true do |t|

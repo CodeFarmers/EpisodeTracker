@@ -88,6 +88,7 @@ describe ApiConnector do
 
       before(:all) do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
+        @ac.should_receive(:get_response_body_for).exactly(4).times.with("http://thetvdb.com/api/Updates.php?type=none").and_return(@time_xml)
         @series_list = @ac.get_series_from_remote("the simpsons")
       end
 
@@ -108,12 +109,20 @@ describe ApiConnector do
           @series_list[1][:series_id].should eq("153221")
         end
       end
+
+      it "should set the last remote update time" do
+        @series_list.length.times do
+          @series_list[0][:last_remote_update].should eq("1362939962")
+          @series_list[1][:last_remote_update].should eq("1362939962")
+        end
+      end
     end
 
     describe 'when the overview is empty' do
 
       before(:all) do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
+        @ac.should_receive(:get_response_body_for).exactly(4).times.with("http://thetvdb.com/api/Updates.php?type=none").and_return(@time_xml)
         @series_list = @ac.get_series_from_remote("the simpsons")
       end
 
@@ -142,7 +151,7 @@ describe ApiConnector do
 
   describe 'create handle for zip' do
 
-    before(:all) { @series = Series.create(name: "SomeSeries", remote_id: "71663") }
+    before(:all) { @series = Series.create(name: "SomeSeries", remote_id: "71663", last_remote_update: "1362939962") }
 
     it 'should be of type tempfile' do
       tmpfile = Tempfile.new('tempfile', "tmp")
