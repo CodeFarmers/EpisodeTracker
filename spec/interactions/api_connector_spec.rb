@@ -224,4 +224,15 @@ describe ApiConnector do
       body.should include "<?xml version=\"1.0\" encoding=\"UTF-8\" ?"
     end
   end
+
+  describe "retrieve_updates" do
+
+    let(:series) { FactoryGirl.create(:series)}
+
+    it "should do the request for updates" do
+      @ac.should_receive(:get_response_body_for)
+        .with("http://thetvdb.com/api/Updates.php?type=all&time=#{series.last_remote_update}")
+      @ac.retrieve_updates(series.last_remote_update)
+    end
+  end
 end

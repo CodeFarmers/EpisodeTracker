@@ -17,4 +17,18 @@ class Series < ActiveRecord::Base
       Series.joins(:episodes).uniq
     end
   end
+
+  def needs_update?
+    ac = ApiConnector.new
+    previous_time = self.last_remote_update
+    updates = ac.retrieve_updates(previous_time)
+    updates = REXML::Document.new(updates)
+
+    updatable_series = []
+    updates.elements.each('//Series') do |element|
+      updatable_series << element.text().to_i
+    end
+
+    updatable_series.include?(self.remote_id)
+  end
 end

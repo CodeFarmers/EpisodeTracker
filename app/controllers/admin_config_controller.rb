@@ -9,6 +9,17 @@ class AdminConfigController < ApplicationController
     render :show
   end
 
+  def update
+    authorize! :manage, :all
+    series = Series.find(params[:id])
+    if series.needs_update?
+      ##TODO: Do updating here
+    else
+      flash.now[:alert] = "No updates available for #{series.name}"
+      render :show
+    end
+  end
+
   def search
     authorize! :manage, :all
     render "admin_config/search_remote"

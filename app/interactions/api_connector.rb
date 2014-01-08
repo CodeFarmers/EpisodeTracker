@@ -74,7 +74,6 @@ class ApiConnector
   def elements_from_xml(attr, xml)
     parsed_xml = Document.new xml
     parsed_xml.elements.to_a("//#{attr}")
-
   end
 
   def htmlize(string)
@@ -87,5 +86,9 @@ class ApiConnector
 
   def unknown_series
     raise ActionController::RoutingError.new('Series not found')
+  end
+
+  def retrieve_updates(previous_time)
+    get_response_body_for("http://thetvdb.com/api/Updates.php?type=all&time=#{previous_time}")
   end
 end

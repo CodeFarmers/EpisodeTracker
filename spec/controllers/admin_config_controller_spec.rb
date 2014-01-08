@@ -146,5 +146,45 @@ describe AdminConfigController do
       end
     end
   end
+
+  describe "POST update" do
+
+    let!(:series) { FactoryGirl.create(:series, id: 1)}
+
+    #it_behaves_like "authentication required", :update, {params: {id: 1}, method: "POST"}
+
+    before { login_admin }
+
+    it "should check if the series needs updating" do
+      Series.any_instance.should_receive(:needs_update?)
+      post :update, id: series.id
+    end
+
+    context "if the series needs updating" do
+
+      it "should update the series" do
+        #SeriesUpdater.should_receive(:execute).with(series.id).and_return()
+      end
+    end
+
+    context "if the series does not need updating" do
+
+      it "should not update the series" do
+        #SeriesUpdater.should_not_receive(:execute).with(series.id).and_return()
+      end
+
+      it "should show a flash message" do
+        Series.any_instance.stub(:needs_update?).and_return(false)
+        post :update, id: series.id
+        flash.now[:alert].should eq("No updates available for #{series.name}")
+      end
+
+      it "should render the show template" do
+        Series.any_instance.stub(:needs_update?).and_return(false)
+        post :update, id: series.id
+        response.should render_template :show
+      end
+    end
+  end
 end
 

@@ -1,4 +1,5 @@
 require 'spec_helper'
+include XmlTestHelpers
 
 describe Series do
 
@@ -9,6 +10,7 @@ describe Series do
   it { should respond_to(:remote_id) }
   it { should respond_to(:overview) }
   it { should respond_to(:last_remote_update) }
+  it { should respond_to(:needs_update?) }
   it { should have_many(:episodes) }
 
   it "should be able to get saved" do
@@ -32,7 +34,7 @@ describe Series do
     it { should_not be_valid }
   end
 
-  describe "#search" do
+  describe "search" do
 
     let!(:simpsons) { FactoryGirl.create(:series, :name => "The Simpsons") }
     let!(:american) { FactoryGirl.create(:series, :name => "American Dad") }
@@ -66,6 +68,28 @@ describe Series do
 
     it "should raise error when no series are found" do
       expect { Series.search("qsdfqf") }.to raise_error(ActionController::RoutingError)
+    end
+  end
+
+  describe "needs_update?" do
+
+    let(:series) { FactoryGirl.create(:series, :name => "The Simpsons", remote_id: 555) }
+
+    it "should retrieve the updates since last remote update" do
+      ApiConnector.any_instance.should_receive(:retrieve_updates).with(series.last_remote_update)
+      series.needs_update?
+    end
+
+    it "should return true if its remote_id is found" do
+      response = XmlTestHelpers.get_text_from_file("spec/data/remote_id_found.xml")
+      FakeWeb.register_uri(:get, "http://thetvdb.com/api/Updates.php?type=all&time=#{series.last_remote_update}", :body => response)
+      series.needs_update?.should be_true
+    end
+
+    it "should return false if its remote_id is not found" do
+      response = XmlTestHelpers.get_text_from_file("spec/data/remote_id_not_found.xml")
+      FakeWeb.register_uri(:get, "http://thetvdb.com/api/Updates.php?type=all&time=#{series.last_remote_update}", :body => response)
+      series.needs_update?.should be_false
     end
   end
 end
