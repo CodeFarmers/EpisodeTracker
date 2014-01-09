@@ -16,6 +16,7 @@ class AdminConfigController < ApplicationController
       ##TODO: Do updating here
     else
       flash.now[:alert] = "No updates available for #{series.name}"
+      @series = Series.all
       render :show
     end
   end
