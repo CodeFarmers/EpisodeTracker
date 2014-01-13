@@ -91,4 +91,9 @@ class ApiConnector
   def retrieve_updates(previous_time)
     get_response_body_for("http://thetvdb.com/api/Updates.php?type=all&time=#{previous_time}")
   end
+
+  def get_series_update(series_id)
+    url = @api_url + "/series/#{series_id}/en.xml"
+    get_response_body_for(url)
+  end
 end

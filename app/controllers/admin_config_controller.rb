@@ -13,7 +13,7 @@ class AdminConfigController < ApplicationController
     authorize! :manage, :all
     series = Series.find(params[:id])
     if series.needs_update?
-      SeriesUpdater.new.execute(series.id)
+      SeriesUpdater.execute(series.id)
     else
       flash.now[:alert] = "No updates available for #{series.name}"
     end
