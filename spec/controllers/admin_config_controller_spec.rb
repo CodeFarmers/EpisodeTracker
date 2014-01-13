@@ -164,14 +164,24 @@ describe AdminConfigController do
       context "if the series needs updating" do
 
         it "should update the series" do
-          #SeriesUpdater.should_receive(:execute).with(series.id).and_return()
+          Series.any_instance.stub(:needs_update?).and_return(true)
+          SeriesUpdater.any_instance.should_receive(:execute).with(series.id)
+          post :update, id: series.id
+        end
+
+        it "should render the show template" do
+          Series.any_instance.stub(:needs_update?).and_return(true)
+          post :update, id: series.id
+          response.should render_template :show
         end
       end
 
       context "if the series does not need updating" do
 
         it "should not update the series" do
-          #SeriesUpdater.should_not_receive(:execute).with(series.id).and_return()
+          Series.any_instance.stub(:needs_update?).and_return(false)
+          SeriesUpdater.should_not_receive(:execute).with(series.id)
+          post :update, id: series.id
         end
 
         it "should show a flash message" do
