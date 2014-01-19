@@ -59,7 +59,8 @@ describe EpisodesController do
           its(:name) { should == "Minstrel Krampus" }
           its(:series_id) { should == 1212 }
           its(:season) { should == 9 }
-          its(:air_date) { should == Date.new(2012, 12, 16)}
+          its(:air_date) { should == Date.new(2012, 12, 16) }
+          its(:remote_id) { should == 4436616 }
         end
       end
     end

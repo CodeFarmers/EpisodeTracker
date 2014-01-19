@@ -15,8 +15,9 @@ class EpisodesController < ApplicationController
         overview = episode.elements["Overview"].text
         season = episode.elements["SeasonNumber"].try(:text).to_i
         air_date = episode.elements["FirstAired"].try(:text)
+        remote_id = episode.elements["id"].text
         name.nil? ? name = "This episode has no name" : name
-        Episode.create!(name: name, overview: overview, series_id: params[:remote_id], season: season, air_date: air_date)
+        Episode.create!(name: name, overview: overview, series_id: params[:remote_id], season: season, air_date: air_date, remote_id: remote_id)
       end
     end
     redirect_to series_episodes_path(@series)
