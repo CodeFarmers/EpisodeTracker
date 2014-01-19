@@ -165,7 +165,7 @@ describe AdminConfigController do
 
         it "should update the series" do
           Series.any_instance.stub(:needs_update?).and_return(true)
-          SeriesUpdater.should_receive(:execute).with(series.id)
+          SeriesUpdater.should_receive(:execute).with(series.remote_id)
           post :update, id: series.id
         end
 
