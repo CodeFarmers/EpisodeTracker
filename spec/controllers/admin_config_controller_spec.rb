@@ -169,6 +169,13 @@ describe AdminConfigController do
           post :update, id: series.id
         end
 
+        it "should update the episodes for the series" do
+          Series.any_instance.stub(:needs_update?).and_return(true)
+          SeriesUpdater.stub(:execute)
+          EpisodesUpdater.should_receive(:execute).with(series.remote_id)
+          post :update, id: series.id
+        end
+
         it "should render the show template" do
           Series.any_instance.stub(:needs_update?).and_return(true)
           SeriesUpdater.stub(:execute)

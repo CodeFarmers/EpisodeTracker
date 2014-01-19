@@ -14,6 +14,7 @@ class AdminConfigController < ApplicationController
     series = Series.find(params[:id])
     if series.needs_update?
       SeriesUpdater.execute(series.remote_id)
+      EpisodesUpdater.execute(series.remote_id)
     else
       flash.now[:alert] = "No updates available for #{series.name}"
     end
