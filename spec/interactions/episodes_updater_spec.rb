@@ -8,7 +8,8 @@ describe EpisodesUpdater do
     let(:episode) { series.episodes.create(name: "De aflevering2", overview: "Het overzicht", series_id: series.id) }
 
     it "should get a list of episodes to update" do
-
+      EpisodesUpdater.should_receive(:episodes_to_update)
+      EpisodesUpdater.execute
     end
 
     it "should download the latest information" do
