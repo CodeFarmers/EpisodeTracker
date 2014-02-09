@@ -242,8 +242,20 @@ describe ApiConnector do
 
     it "should request the series update" do
       @ac.should_receive(:get_response_body_for)
-      .with("http://thetvdb.com/api/4F5EC797A9F93512/series/#{series.id}/en.xml")
-      @ac.get_series_update(series.id)
+      .with("http://thetvdb.com/api/4F5EC797A9F93512/series/#{series.remote_id}/en.xml")
+      @ac.get_series_update(series.remote_id)
+    end
+  end
+
+  describe "get_episode_update" do
+
+    let(:series) { FactoryGirl.create(:series) }
+    let(:episode) { FactoryGirl.create(:episode, series: series) }
+
+    it "should request the episode update" do
+      @ac.should_receive(:get_response_body_for)
+      .with("http://thetvdb.com/api/4F5EC797A9F93512/episodes/#{episode.remote_id}/en.xml")
+      @ac.get_episode_update(episode.remote_id)
     end
   end
 end

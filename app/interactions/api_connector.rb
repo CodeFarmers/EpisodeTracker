@@ -96,4 +96,9 @@ class ApiConnector
     url = @api_url + "/series/#{remote_id}/en.xml"
     get_response_body_for(url)
   end
+
+  def get_episode_update(remote_id)
+    url = @api_url + "/episodes/#{remote_id}/en.xml"
+    get_response_body_for(url)
+  end
 end

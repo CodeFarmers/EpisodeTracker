@@ -5,6 +5,7 @@ FactoryGirl.define do
       "someEpisode#{n}"
     end
     overview "The Episode Overview"
+    remote_id "15511"
     series
   end
 end
