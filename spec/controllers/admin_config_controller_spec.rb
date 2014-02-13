@@ -1,4 +1,5 @@
 require "spec_helper"
+include XmlTestHelpers
 
 describe AdminConfigController do
   render_views
@@ -108,7 +109,7 @@ describe AdminConfigController do
 
           before(:each) do
             ApiConnector.any_instance.stub(:get_series_from_remote)
-            .and_return( [{ series_id: "555551", series_name: "The Simpsons", series_overview: "The overview", last_remote_update: "1362939962" }] )
+            .and_return( [{ series_id: "555551", series_name: "The Simpsons", series_overview: "The overview" }] )
 
             xhr :get, :search_remote, :name => "the simpsons"
           end
@@ -133,7 +134,7 @@ describe AdminConfigController do
         context 'when more than one result is found remotely' do
 
           before(:each) do
-            ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview", last_remote_update: "1362939962"}, { :series_id => "555552", :series_name => "Jessica Simpson's The Price of Beauty", last_remote_update: "1362939962" }] )
+            ApiConnector.any_instance.stub(:get_series_from_remote).and_return( [{ :series_id => "555551", :series_name => "The Simpsons", :series_overview => "The overview" }, { :series_id => "555552", :series_name => "Jessica Simpson's The Price of Beauty" }] )
             post :search_remote, :name => "the simpsons"
           end
 
@@ -154,60 +155,26 @@ describe AdminConfigController do
     context "with an admin" do
 
       let!(:series) { FactoryGirl.create(:series, id: 1)}
-      before { login_admin }
+      before do
+        ActiveRecord::Base.connection.execute("insert into updates (last_updated_at) values ('1362939962')")
+        login_admin
+      end
 
-      it "should check if the series needs updating" do
-        Series.any_instance.should_receive(:needs_update?)
+
+
+      it "should update the series" do
+        FakeWeb.register_uri(:get, "http://thetvdb.com/api/Updates.php?type=all&time=1362939962", body: "")
+        SeriesUpdater.should_receive(:execute)
         post :update, id: series.id
       end
 
-      context "if the series needs updating" do
-
-        it "should update the series" do
-          Series.any_instance.stub(:needs_update?).and_return(true)
-          SeriesUpdater.should_receive(:execute).with(series.remote_id)
-          EpisodesUpdater.should_receive(:execute).with(series.remote_id)
-          post :update, id: series.id
-        end
-
-        it "should update the episodes for the series" do
-          Series.any_instance.stub(:needs_update?).and_return(true)
-          SeriesUpdater.stub(:execute)
-          EpisodesUpdater.should_receive(:execute).with(series.remote_id)
-          post :update, id: series.id
-        end
-
-        it "should render the show template" do
-          Series.any_instance.stub(:needs_update?).and_return(true)
-          SeriesUpdater.stub(:execute)
-          EpisodesUpdater.stub(:execute)
-          post :update, id: series.id
-          response.should render_template :show
-        end
-      end
-
-      context "if the series does not need updating" do
-
-        it "should not update the series" do
-          Series.any_instance.stub(:needs_update?).and_return(false)
-          SeriesUpdater.should_not_receive(:execute).with(series.id)
-          post :update, id: series.id
-        end
-
-        it "should show a flash message" do
-          Series.any_instance.stub(:needs_update?).and_return(false)
-          post :update, id: series.id
-          flash.now[:alert].should eq("No updates available for #{series.name}")
-        end
-
-        it "should render the show template" do
-          Series.any_instance.stub(:needs_update?).and_return(false)
-          post :update, id: series.id
-          response.should render_template :show
-        end
+      it "should render the show template" do
+        FakeWeb.register_uri(:get, "http://thetvdb.com/api/Updates.php?type=all&time=1362939962", body: "")
+        SeriesUpdater.stub(:execute)
+        post :update, id: series.id
+        response.should render_template :show
       end
     end
-
   end
 end
 

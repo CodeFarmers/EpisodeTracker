@@ -151,7 +151,7 @@ describe ApiConnector do
 
   describe 'create handle for zip' do
 
-    before(:all) { @series = Series.create(name: "SomeSeries", remote_id: "71663", last_remote_update: "1362939962") }
+    before(:all) { @series = Series.create(name: "SomeSeries", remote_id: "71663" ) }
 
     it 'should be of type tempfile' do
       tmpfile = Tempfile.new('tempfile', "tmp")
@@ -228,11 +228,15 @@ describe ApiConnector do
   describe "retrieve_updates" do
 
     let(:series) { FactoryGirl.create(:series)}
+    let(:last_updated_at) { '1362939962' }
+    before do
+      ActiveRecord::Base.connection.execute("insert into updates (last_updated_at) values ('1362939962')")
+    end
 
     it "should do the request for updates" do
       @ac.should_receive(:get_response_body_for)
-        .with("http://thetvdb.com/api/Updates.php?type=all&time=#{series.last_remote_update}")
-      @ac.retrieve_updates(series.last_remote_update)
+        .with("http://thetvdb.com/api/Updates.php?type=all&time=#{last_updated_at}")
+      @ac.retrieve_updates(last_updated_at)
     end
   end
 

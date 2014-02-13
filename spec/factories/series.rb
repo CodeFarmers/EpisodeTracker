@@ -8,6 +8,5 @@ FactoryGirl.define do
     sequence :remote_id do |n|
       "#{n}"
     end
-    last_remote_update "1362939962"
   end
 end
