@@ -160,8 +160,6 @@ describe AdminConfigController do
         login_admin
       end
 
-
-
       it "should update the series" do
         FakeWeb.register_uri(:get, "http://thetvdb.com/api/Updates.php?type=all&time=1362939962", body: "")
         SeriesUpdater.should_receive(:execute)

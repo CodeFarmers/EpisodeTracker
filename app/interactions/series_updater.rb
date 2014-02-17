@@ -11,10 +11,16 @@ class SeriesUpdater
     update_info.elements.each("//Series") { |element| series_ids << element.text }
     ap series_ids
     series_ids.each do |remote_id|
-      if Series.where(remote_id: remote_id)
-        update_series_info
+      series = Series.where(remote_id: remote_id).first
+      series_update = ApiConnector.new.get_series_update(remote_id)
+      parsed_series_update = REXML::Document.new(series_update)
+      name = parsed_series_update.elements["//SeriesName"].try(:text)
+      overview = parsed_series_update.elements["//Overview"].try(:text)
+      if series
+        series.update_attributes(name: name, overview: overview)
       else
-        create_series
+        remote_id = parsed_series_update.elements["//id"].try(:text)
+        Series.create(name: name, overview: overview, remote_id: remote_id)
       end
     end
 

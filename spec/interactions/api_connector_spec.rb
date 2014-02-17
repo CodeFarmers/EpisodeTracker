@@ -3,7 +3,7 @@ require "zip/zip"
 
 describe ApiConnector do
 
-  before(:all) do
+  before do
     @xml = %q(<?xml version="1.0" encoding="UTF-8" ?>
           <Data>
             <Series>
@@ -86,7 +86,7 @@ describe ApiConnector do
 
     describe 'when the search returns multiple results' do
 
-      before(:all) do
+      before do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
         @ac.should_receive(:get_response_body_for).exactly(4).times.with("http://thetvdb.com/api/Updates.php?type=none").and_return(@time_xml)
         @series_list = @ac.get_series_from_remote("the simpsons")
@@ -120,7 +120,7 @@ describe ApiConnector do
 
     describe 'when the overview is empty' do
 
-      before(:all) do
+      before do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
         @ac.should_receive(:get_response_body_for).exactly(4).times.with("http://thetvdb.com/api/Updates.php?type=none").and_return(@time_xml)
         @series_list = @ac.get_series_from_remote("the simpsons")
@@ -151,7 +151,7 @@ describe ApiConnector do
 
   describe 'create handle for zip' do
 
-    before(:all) { @series = Series.create(name: "SomeSeries", remote_id: "71663" ) }
+    before { @series = Series.create(name: "SomeSeries", remote_id: "71663" ) }
 
     it 'should be of type tempfile' do
       tmpfile = Tempfile.new('tempfile', "tmp")
@@ -168,7 +168,7 @@ describe ApiConnector do
 
   describe 'unzip zipfile' do
 
-    before(:all) do
+    before do
       ziphandle = File.open("spec/data/en-complete.zip")
       @files = @ac.unzip(ziphandle)
     end
@@ -192,7 +192,7 @@ describe ApiConnector do
 
   describe 'get episodes for series' do
 
-    before(:all) do
+    before do
       series = Series.create(name: "SomeSeries", remote_id: "71663")
       ziphandle = File.open("spec/data/en-stripped.zip")
       @ac.should_receive(:create_handle_for_zip).with(series.remote_id).and_return(ziphandle)
