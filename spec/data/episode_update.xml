@@ -1,13 +1,13 @@
 <Data><Episode>
-  <id>15511</id>
+  <id>4</id>
   <seasonid>681</seasonid>
   <EpisodeNumber>1</EpisodeNumber>
   <EpisodeName>The Ceremony</EpisodeName>
-  <FirstAired></FirstAired>
+  <FirstAired>1995-09-19</FirstAired>
   <GuestStars></GuestStars>
   <Director></Director>
   <Writer></Writer>
-  <Overview>A sacred ceremony is held for each grunt to decide who is going to be "The Chosen One" who will save all of the grunts from extinction. Perry is The Chosen One. Perry becomes stressed, and flees from the Monastery into Earth.</Overview>
+  <Overview>A sacred ceremony</Overview>
   <ProductionCode></ProductionCode>
   <lastupdated>1365509483</lastupdated>
   <flagged>0</flagged>
@@ -17,7 +17,7 @@
   <DVD_chapter></DVD_chapter>
   <absolute_number></absolute_number>
   <filename>episodes/70612/15511.jpg</filename>
-  <seriesid>70612</seriesid>
+  <seriesid>333</seriesid>
   <thumb_added></thumb_added>
   <thumb_width>400</thumb_width>
   <thumb_height>300</thumb_height>
