@@ -3,17 +3,17 @@ class SeriesUpdater
 
   def self.execute
     update_info = REXML::Document.new(ApiConnector.new.retrieve_updates(last_updated_at))
-    UpdateHelper.last_updated_at = update_info.elements["//Time"].text
+    self.last_updated_at = update_info.elements["//Time"].text
 
     series_ids = []
     update_info.elements.each("//Series") { |element| series_ids << element.text }
     series_ids.each do |remote_id|
       series = Series.where(remote_id: remote_id).first
-      series_update = ApiConnector.new.get_series_update(remote_id)
-      parsed_series_update = REXML::Document.new(series_update)
-      name = parsed_series_update.elements["//SeriesName"].try(:text)
-      overview = parsed_series_update.elements["//Overview"].try(:text)
       if series
+        series_update = ApiConnector.new.get_series_update(remote_id)
+        parsed_series_update = REXML::Document.new(series_update)
+        name = parsed_series_update.elements["//SeriesName"].try(:text)
+        overview = parsed_series_update.elements["//Overview"].try(:text)
         series.update_attributes(name: name, overview: overview)
       end
     end
