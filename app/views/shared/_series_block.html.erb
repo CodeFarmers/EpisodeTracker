@@ -1,6 +1,15 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Available series</h3>
+        <h3 class="panel-title">
+          Available series
+          <% if @series.any? %>
+              <%= form_tag("/admin_config/update", class: "inline-form right") do %>
+                  <%= submit_tag "Update all", :class => "btn btn-primary btn-sm" %>
+              <% end %>
+          <% end %>
+          <div class='clearfix'></div>
+        </h3>
+
     </div>
     <div class="panel-body">
         <table class='table table-striped'>
@@ -12,13 +21,7 @@
                     <tr>
                         <td><%= truncate(series.name, length: 40) %></td>
                         <td>
-                            <%= form_tag("/admin_config/update") do %>
-                                <%= hidden_field_tag :id, series.id %>
-                                <%= submit_tag "Update", :class => "btn btn-primary" %>
-                            <% end %>
-                        </td>
-                        <td>
-                            <% if series.episodes %>
+                            <% if series.episodes.empty? %>
                                 <%= form_tag("/episodes/create", class: "inline-form right") do %>
                                     <%= hidden_field_tag :remote_id, series.remote_id %>
                                     <%= submit_tag "Get episodes", :class => "btn btn-primary" %>
