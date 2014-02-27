@@ -194,15 +194,6 @@ describe ApiConnector do
     end
   end
 
-  describe 'get response body for' do
-
-    it "should return the response.body" do
-      FakeWeb.register_uri(:get, "http://thetvdb.com/api/GetSeries.php?seriesname=qsdfqsdf", :body => @xml)
-      body = @ac.get_response_body_for("http://thetvdb.com/api/GetSeries.php?seriesname=qsdfqsdf")
-      body.should include "<?xml version=\"1.0\" encoding=\"UTF-8\" ?"
-    end
-  end
-
   describe "retrieve_updates" do
 
     let(:series) { FactoryGirl.create(:series)}
