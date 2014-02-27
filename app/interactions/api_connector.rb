@@ -11,12 +11,6 @@ class ApiConnector
     @api_url = @mirror_path + api_key
   end
 
-  def set_previous_time()
-    xml = get_response_body_for("#{@mirror_path}/Updates.php?type=none")
-    time = elements_from_xml("Time", xml)
-    @previous_time = time[0].text
-  end
-
   def get_series_from_remote(name)
     url = @mirror_path + "/GetSeries.php?seriesname=#{htmlize(name)}"
     xml = get_response_body_for(url)
@@ -34,7 +28,7 @@ class ApiConnector
       id = series.elements["seriesid"].text
       name = series.elements["SeriesName"].text
       overview = series.elements["Overview"].try(:text)
-      series_list << { series_id: id, series_name: name, series_overview: overview, last_remote_update: set_previous_time }
+      series_list << { series_id: id, series_name: name, series_overview: overview }
     end
     series_list
   end

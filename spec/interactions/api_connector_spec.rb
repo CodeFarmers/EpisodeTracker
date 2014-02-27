@@ -60,25 +60,12 @@ describe ApiConnector do
           )
     @empty_xml = %q(<?xml version="1.0" encoding="UTF-8" ?><Error>seriesname is required</Error>)
     @ac = ApiConnector.new
-    @time_xml = %q(<?xml version="1.0" encoding="UTF-8" ?>
-                <Items>
-                  <Time>1362939962</Time>
-                </Items>)
   end
+
   describe 'initialize' do
     it 'should instantiate an apiconnector' do
       @ac.should_not be_nil
       @ac.should be_instance_of(ApiConnector)
-    end
-  end
-
-  describe 'set_previous_time' do
-    it 'should set the previous time' do
-      @ac.should respond_to(:set_previous_time)
-      @ac.should_receive(:get_response_body_for).and_return(@time_xml)
-      previous_time = @ac.set_previous_time
-      previous_time.should_not be_nil
-      previous_time.should be_instance_of(String)
     end
   end
 
@@ -88,7 +75,6 @@ describe ApiConnector do
 
       before do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
-        @ac.should_receive(:get_response_body_for).exactly(4).times.with("http://thetvdb.com/api/Updates.php?type=none").and_return(@time_xml)
         @series_list = @ac.get_series_from_remote("the simpsons")
       end
 
@@ -109,20 +95,12 @@ describe ApiConnector do
           @series_list[1][:series_id].should eq("153221")
         end
       end
-
-      it "should set the last remote update time" do
-        @series_list.length.times do
-          @series_list[0][:last_remote_update].should eq("1362939962")
-          @series_list[1][:last_remote_update].should eq("1362939962")
-        end
-      end
     end
 
     describe 'when the overview is empty' do
 
       before do
         @ac.should_receive(:get_response_body_for).with("http://thetvdb.com/api/GetSeries.php?seriesname=the%20simpsons").and_return(@xml)
-        @ac.should_receive(:get_response_body_for).exactly(4).times.with("http://thetvdb.com/api/Updates.php?type=none").and_return(@time_xml)
         @series_list = @ac.get_series_from_remote("the simpsons")
       end
 
