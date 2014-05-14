@@ -62,6 +62,12 @@ describe EpisodesController do
           its(:air_date) { should == Date.new(2012, 12, 16) }
           its(:remote_id) { should == 4436616 }
         end
+
+        context "when some attributes are missing" do
+          it "should have a default when the air date is missing" do
+            @episodes[0].air_date.should == Date.new(2100, 01, 01)
+          end
+        end
       end
     end
   end
@@ -88,10 +94,14 @@ describe EpisodesController do
 
         let(:series) { FactoryGirl.create(:series) }
         let(:other_user) { FactoryGirl.create(:user) }
+        let(:date) { '01/01/2014'.to_date }
         before(:each) do
-          @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 2)
-          @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1)
-          @episode3 = series.episodes.create(name: "De aflevering3", overview: "Het overzicht", season: 1)
+          @episode1 = series.episodes.create(name: "De aflevering", overview: "Het overzicht", season: 1,
+                                             air_date: date )
+          @episode2 = series.episodes.create(name: "De aflevering2", overview: "Het overzicht", season: 2,
+                                             air_date: date + 1.day )
+          @episode3 = series.episodes.create(name: "De aflevering3", overview: "Het overzicht", season: 1,
+                                             air_date: date - 1.day )
           login_user
           UserEpisode.create(user_id: @current_user.id, episode_id: @episode1.id)
           UserEpisode.create(user_id: @current_user.id, episode_id: @episode3.id)
@@ -113,8 +123,13 @@ describe EpisodesController do
 
         it "should be grouped by season and sorted" do
          @episodes = assigns(:episodes_grouped_by_season)
-         @episodes[0].should == [1, [@episode1, @episode3] ]
+         @episodes[0].should == [1, [@episode3, @episode1] ]
          @episodes[1].should == [2, [@episode2] ]
+        end
+
+        it "should be sorted by air date within season" do
+          @episodes = assigns(:episodes_grouped_by_season)
+          @episodes[0].should == [1, [@episode3, @episode1]]
         end
 
         it "should assign the user_episodes" do

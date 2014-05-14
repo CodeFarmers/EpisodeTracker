@@ -29,7 +29,7 @@ class SeriesUpdater
       name = parsed_episode_update.elements["//EpisodeName"].try(:text)
       overview = parsed_episode_update.elements["//Overview"].try(:text)
       season = parsed_episode_update.elements["//SeasonNumber"].try(:text)
-      air_date = parsed_episode_update.elements["//FirstAired"].try(:text)
+      air_date = parsed_episode_update.elements["//FirstAired"].try(:text) || Date.new(2100,01,01)
 
       if episode
         episode.update_attributes(name: name, overview: overview, season: season, air_date: air_date)
